@@ -20,6 +20,7 @@
       </button>
     </div>
     <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/" class="text-sm/6 font-semibold text-white">Главная</a>
       <a href="/oferta" class="text-sm/6 font-semibold text-white">Оферта</a>
       <a href="/project" class="text-sm/6 font-semibold text-white">Проект</a>
       <a href="/payments" class="text-sm/6 font-semibold text-white">Выплаты</a>
