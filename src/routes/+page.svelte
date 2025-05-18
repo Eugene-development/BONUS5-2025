@@ -15,13 +15,13 @@
       </button>
     </div>
     <div class="hidden lg:flex lg:gap-x-12">
-      <a href="#" class="text-sm/6 font-semibold text-white">Оферта</a>
-      <a href="#" class="text-sm/6 font-semibold text-white">Проект</a>
-      <a href="#" class="text-sm/6 font-semibold text-white">Выплаты</a>
-      <a href="#" class="text-sm/6 font-semibold text-white">152 ФЗ</a>
+      <a href="/oferta" class="text-sm/6 font-semibold text-white">Оферта</a>
+      <a href="/project" class="text-sm/6 font-semibold text-white">Проект</a>
+      <a href="/payments" class="text-sm/6 font-semibold text-white">Выплаты</a>
+      <a href="/152fz" class="text-sm/6 font-semibold text-white">152 ФЗ</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a href="#" class="text-sm/6 font-semibold text-white">Регистрация <span aria-hidden="true">&rarr;</span></a>
+      <a href="/registration" class="text-sm/6 font-semibold text-white">Регистрация <span aria-hidden="true">&rarr;</span></a>
     </div>
   </nav>
   <!-- Mobile menu, show/hide based on menu open state. -->
@@ -44,13 +44,13 @@
       <div class="mt-6 flow-root">
         <div class="-my-6 divide-y divide-gray-500/25">
           <div class="space-y-2 py-6">
-            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Product</a>
-            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Features</a>
-            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Marketplace</a>
-            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Company</a>
+            <a href="/oferta" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Оферта</a>
+            <a href="/project" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Проект</a>
+            <a href="/payments" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Выплаты</a>
+            <a href="/152fz" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">152 ФЗ</a>
           </div>
           <div class="py-6">
-            <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800">Log in</a>
+            <a href="/registration" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800">Регистрация</a>
           </div>
         </div>
       </div>
