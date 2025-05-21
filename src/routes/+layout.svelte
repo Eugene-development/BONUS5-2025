@@ -65,3 +65,11 @@
 </header>
 
 {@render children()}
+
+<footer class="bg-gray-900 py-6 border-t border-gray-100">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="flex justify-center">
+      <a href="mailto:privacy@bonus5.ru" class="text-sm font-semibold text-gray-400 hover:text-white">privacy@bonus5.ru</a>
+    </div>
+  </div>
+</footer>
