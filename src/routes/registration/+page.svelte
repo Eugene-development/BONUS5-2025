@@ -1,6 +1,6 @@
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl lg:mx-0">
+    <div class="mx-auto ">
       <h2 class="text-pretty text-4xl font-semibold tracking-widest text-white sm:text-6xl">Регистрация</h2>
       <p class="mt-6 text-lg/8 text-gray-300">Зарегистрируйтесь, чтобы начать зарабатывать с BONUS5</p>
     </div>
@@ -9,13 +9,13 @@
       <form action="#" method="POST" class="space-y-8">
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
-            <label for="first-name" class="block text-sm/6 font-semibold text-white">Имя</label>
+            <label for="first-name" class="block text-sm/6 font-semibold text-white">Ваше имя</label>
             <div class="mt-2.5">
               <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
             </div>
           </div>
           <div>
-            <label for="last-name" class="block text-sm/6 font-semibold text-white">Фамилия</label>
+            <label for="last-name" class="block text-sm/6 font-semibold text-white">Номер банковской карты</label>
             <div class="mt-2.5">
               <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
             </div>
@@ -26,12 +26,12 @@
               <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
             </div>
           </div>
-          <div class="sm:col-span-2">
+          <!-- <div class="sm:col-span-2">
             <label for="phone-number" class="block text-sm/6 font-semibold text-white">Телефон</label>
             <div class="mt-2.5">
               <input type="tel" name="phone-number" id="phone-number" autocomplete="tel" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
             </div>
-          </div>
+          </div> -->
           <div class="sm:col-span-2">
             <label for="password" class="block text-sm/6 font-semibold text-white">Пароль</label>
             <div class="mt-2.5">

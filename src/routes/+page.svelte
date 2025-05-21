@@ -68,9 +68,9 @@
             </div>
           </div>
           <div class="sm:col-span-2">
-            <label for="email" class="block text-sm/6 font-semibold text-white">Email</label>
+            <label for="position" class="block text-sm/6 font-semibold text-white">Изделие, которым интересуется клиент</label>
             <div class="mt-2.5">
-              <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
+              <input type="text" name="position" id="position"  class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500">
             </div>
           </div>
           <div class="sm:col-span-2">
@@ -103,7 +103,7 @@
     </div>
     <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base/7 sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
       <div>
-        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Менеджер по продажам</h3>
+        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Менеджеры по продажам</h3>
         <address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
           <p>Вы работаете менеджером по продажам мебели</p>
         </address>
@@ -111,19 +111,19 @@
       <div>
         <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Ремонтные бригады</h3>
         <address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
-          <p>Вы занимаетесь ремонтом помещений</p>
+          <p>Вы занимаетесь ремонтом квартир и офисов</p>
         </address>
       </div>
       <div>
-        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Дизайнер</h3>
+        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Дизайнеры</h3>
         <address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
-          <p>Вы дизайнер мебели или интерьера</p>
+          <p>Вы дизайнер мебели или интерьеров</p>
         </address>
       </div>
       <div>
-        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Сам клиент</h3>
+        <h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Сами клиенты</h3>
         <address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
-          <p>Мы предоставим кэшбэк в размере 5%</p>
+          <p>Мы предоставим кэшбэк клиенту в размере 5%</p>
         </address>
       </div>
     </div>
