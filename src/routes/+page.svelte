@@ -190,7 +190,7 @@
 					</div>
 					<div class="sm:col-span-2">
 						<label for="phone-number" class="block text-sm/6 font-semibold text-white"
-							>Телефон (мессенджер)</label
+							>Телефон клиента</label
 						>
 						<div class="mt-2.5">
 							<input
