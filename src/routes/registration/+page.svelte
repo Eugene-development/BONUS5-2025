@@ -119,7 +119,7 @@
 			<div class="mt-10 border-t border-white/10 pt-8 text-center">
 				<p class="text-sm text-gray-400">
 					Уже зарегистрированы? <a
-						href="#"
+						href="/login"
 						class="font-semibold text-indigo-400 hover:text-indigo-300">Войти</a
 					>
 				</p>
