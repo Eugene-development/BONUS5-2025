@@ -50,7 +50,6 @@
 				<dl class="mt-10 space-y-4 text-base/7 text-gray-300">
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
-							<span class="sr-only">Address</span>
 							<svg
 								class="h-7 w-6 text-gray-400"
 								fill="none"
@@ -73,7 +72,6 @@
 					</div>
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
-							<span class="sr-only">Address</span>
 							<svg
 								class="h-7 w-6 text-gray-400"
 								fill="none"
@@ -93,30 +91,6 @@
 						<dd>
 							<strong>Конфиденциально.</strong>
 							Мы не будем никому раскрывать ваши личные регистрационные данные.
-						</dd>
-					</div>
-					<div class="flex gap-x-4">
-						<dt class="flex-none">
-							<span class="sr-only">Address</span>
-							<svg
-								class="h-7 w-6 text-gray-400"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-								data-slot="icon"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-						</dt>
-						<dd>
-							<strong>Честно.</strong>
-							Гарантировано выплатим бонус в полном объёме в течении 10 рабочих дней после сделки.
 						</dd>
 					</div>
 
@@ -142,6 +116,29 @@
 						<dd>
 							<strong>Выгодно.</strong>
 							Хороший дополнительный заработок и экономия на покупках для вас или ваших знакомых.
+						</dd>
+					</div>
+					<div class="flex gap-x-4">
+						<dt class="flex-none">
+							<svg
+								class="h-7 w-6 text-gray-400"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+						</dt>
+						<dd>
+							<strong>Честно.</strong>
+							Гарантировано выплатим бонус в полном объёме в течении 10 рабочих дней после закрытия сделки.
 						</dd>
 					</div>
 				</dl>
