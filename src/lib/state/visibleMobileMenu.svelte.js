@@ -1,3 +1,3 @@
 export const visibleMobileMenu = $state({
-	value: false
+	value: true
 });
