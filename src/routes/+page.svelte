@@ -1,6 +1,6 @@
 <div class="relative isolate bg-gray-900">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-		<div class="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
+		<div class="relative mt-2 px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
 				<div
 					class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2"
@@ -67,29 +67,8 @@
 								/>
 							</svg>
 						</dt>
-						<dd>Надёжно. Мы работаем с лучшими мебельными и ремонтными компаниями.</dd>
-					</div>
-					<div class="flex gap-x-4">
-						<dt class="flex-none">
-							<span class="sr-only">Address</span>
-							<svg
-								class="h-7 w-6 text-gray-400"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-								data-slot="icon"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-						</dt>
 						<dd>
-							Конфиденциально. Мы не будем никому раскрывать ваши личные регистрационные данные.
+							<strong>Надёжно.</strong> Мы работаем с лучшими мебельными и ремонтными компаниями.
 						</dd>
 					</div>
 					<div class="flex gap-x-4">
@@ -112,8 +91,32 @@
 							</svg>
 						</dt>
 						<dd>
-							Честно. Гарантировано выплатим бонус в полном объёме в течении 10 рабочих дней после
-							сделки.
+							<strong>Конфиденциально.</strong>
+							Мы не будем никому раскрывать ваши личные регистрационные данные.
+						</dd>
+					</div>
+					<div class="flex gap-x-4">
+						<dt class="flex-none">
+							<span class="sr-only">Address</span>
+							<svg
+								class="h-7 w-6 text-gray-400"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+						</dt>
+						<dd>
+							<strong>Честно.</strong>
+							Гарантировано выплатим бонус в полном объёме в течении 10 рабочих дней после сделки.
 						</dd>
 					</div>
 
@@ -137,14 +140,14 @@
 							</svg>
 						</dt>
 						<dd>
-							Выгодно. Хороший дополнительный заработок и экономия на покупке или услуге для вас или
-							ваших знакомых.
+							<strong>Выгодно.</strong>
+							Хороший дополнительный заработок и экономия на покупке или услуге для вас или ваших знакомых.
 						</dd>
 					</div>
 				</dl>
 			</div>
 		</div>
-		<form action="#" method="POST" class="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
+		<form action="#" method="POST" class="mt-4 px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
