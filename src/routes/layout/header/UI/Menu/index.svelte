@@ -41,10 +41,9 @@
 		<a href="/payments" class="text-sm/6 font-normal text-white">Выплаты</a>
 		<a href="/152fz" class="text-sm/6 font-normal text-white">152 ФЗ</a>
 	</div>
-	<div class="hidden lg:flex lg:flex-1 lg:justify-end">
-		<a href="/registration" class="text-sm/6 font-normal text-white"
-			>Регистрация <span aria-hidden="true">&rarr;</span></a
-		>
+	<div class="hidden *:tracking-widest lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
+		<a href="/login" class="mr-4 text-sm/6 font-normal text-white">Вход </a>
+		<a href="/registration" class="text-sm/6 font-normal text-white">Регистрация</a>
 	</div>
 </nav>
 
