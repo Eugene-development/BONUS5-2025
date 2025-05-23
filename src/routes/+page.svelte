@@ -1,6 +1,6 @@
 <div class="relative isolate bg-gray-900">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-		<div class="relative mt-2 px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
+		<div class="relative mt-2 px-6 pt-16 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
 				<div
 					class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2"
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<h2 class="text-4xl font-semibold tracking-widest text-pretty text-white sm:text-6xl">
-					BONUS5
+					BONUS 5
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
 					Отправьте нам контакты потенциального клиента и получите бонус 5%, если сделка состоится.
@@ -141,7 +141,7 @@
 						</dt>
 						<dd>
 							<strong>Выгодно.</strong>
-							Хороший дополнительный заработок и экономия на покупке или услуге для вас или ваших знакомых.
+							Хороший дополнительный заработок и экономия на покупках для вас или ваших знакомых.
 						</dd>
 					</div>
 				</dl>
@@ -266,11 +266,13 @@
 			<div>
 				<h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Дизайнеры</h3>
 				<address class="border-l border-gray-200 pt-2 pl-6 text-gray-600 not-italic">
-					<p>Вы дизайнер мебели или интерьеров</p>
+					<p>Вы создаёте дизайн мебели или интерьеров</p>
 				</address>
 			</div>
 			<div>
-				<h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">Клиенты</h3>
+				<h3 class="border-l border-indigo-600 pl-6 font-semibold text-gray-900">
+					Клиенты компаний
+				</h3>
 				<address class="border-l border-gray-200 pt-2 pl-6 text-gray-600 not-italic">
 					<p>Мы предоставим вам кэшбэк в размере 5%</p>
 				</address>

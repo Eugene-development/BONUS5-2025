@@ -34,15 +34,15 @@
 			</svg>
 		</button>
 	</div>
-	<div class="hidden lg:flex lg:gap-x-12">
-		<a href="/" class="text-sm/6 font-semibold text-white">Главная</a>
-		<a href="/oferta" class="text-sm/6 font-semibold text-white">Оферта</a>
-		<a href="/project" class="text-sm/6 font-semibold text-white">Проект</a>
-		<a href="/payments" class="text-sm/6 font-semibold text-white">Выплаты</a>
-		<a href="/152fz" class="text-sm/6 font-semibold text-white">152 ФЗ</a>
+	<div class="hidden *:tracking-widest lg:flex lg:gap-x-12">
+		<a href="/" class="text-sm/6 font-normal text-white">Главная</a>
+		<a href="/oferta" class="text-sm/6 font-normal text-white">Оферта</a>
+		<a href="/project" class="text-sm/6 font-normal text-white">Проект</a>
+		<a href="/payments" class="text-sm/6 font-normal text-white">Выплаты</a>
+		<a href="/152fz" class="text-sm/6 font-normal text-white">152 ФЗ</a>
 	</div>
 	<div class="hidden lg:flex lg:flex-1 lg:justify-end">
-		<a href="/registration" class="text-sm/6 font-semibold text-white"
+		<a href="/registration" class="text-sm/6 font-normal text-white"
 			>Регистрация <span aria-hidden="true">&rarr;</span></a
 		>
 	</div>
