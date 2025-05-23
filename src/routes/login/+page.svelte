@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<div class="relative isolate bg-gray-900 py-24 sm:py-32">
+<div class="relative isolate min-h-screen bg-gray-900 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<div class="mx-auto text-center">
 			<h2 class="text-4xl font-normal tracking-widest text-pretty text-white sm:text-6xl">Вход</h2>
