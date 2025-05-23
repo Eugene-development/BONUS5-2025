@@ -12,6 +12,7 @@
     </div> -->
 	<div class="flex lg:hidden">
 		<button
+			onclick={() => (visibleMobileMenu.value = true)}
 			type="button"
 			class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
 		>
