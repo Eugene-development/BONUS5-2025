@@ -3,11 +3,9 @@
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
-		<div class="mx-auto">
-			<h2 class="text-4xl font-semibold tracking-widest text-pretty text-white sm:text-6xl">
-				Вход
-			</h2>
-			<p class="mt-6 text-lg/8 text-gray-300">Войдите в свой аккаунт BONUS5</p>
+		<div class="mx-auto text-center">
+			<h2 class="text-4xl font-normal tracking-widest text-pretty text-white sm:text-6xl">Вход</h2>
+			<!-- <p class="mt-6 text-lg/8 text-gray-300">Войдите в свой аккаунт BONUS5</p> -->
 		</div>
 
 		<div class="mx-auto mt-16 max-w-xl">

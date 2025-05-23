@@ -3,13 +3,13 @@
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
-		<div class="mx-auto">
-			<h2 class="text-4xl font-semibold tracking-widest text-pretty text-white sm:text-6xl">
+		<div class="mx-auto text-center">
+			<h2 class="text-4xl font-normal tracking-widest text-pretty text-white sm:text-6xl">
 				Регистрация
 			</h2>
-			<p class="mt-6 text-lg/8 text-gray-300">
+			<!-- <p class="mt-6 text-lg/8 text-gray-300">
 				Зарегистрируйтесь, чтобы начать зарабатывать с BONUS5
-			</p>
+			</p> -->
 		</div>
 
 		<div class="mx-auto mt-16 max-w-xl">
@@ -24,21 +24,19 @@
 								name="first-name"
 								id="first-name"
 								autocomplete="given-name"
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
 							/>
 						</div>
 					</div>
 					<div>
-						<label for="last-name" class="block text-sm/6 font-semibold text-white"
-							>Номер банковской карты</label
-						>
+						<label for="last-name" class="block text-sm/6 font-semibold text-white">Город</label>
 						<div class="mt-2.5">
 							<input
 								type="text"
 								name="last-name"
 								id="last-name"
 								autocomplete="family-name"
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
 							/>
 						</div>
 					</div>
