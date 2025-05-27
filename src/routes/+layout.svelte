@@ -2,6 +2,14 @@
 	import '../app.css';
 	import { Menu } from './layout/header/UI';
 	import { Component } from './layout/footer/UI';
+	import { onMount } from 'svelte';
+	import { checkAuth, auth } from '$lib/state/auth.svelte.js';
+
+	// Check authentication state when the app loads
+	onMount(async () => {
+		await checkAuth();
+	});
+
 	let { children } = $props();
 </script>
 
