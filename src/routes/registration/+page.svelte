@@ -1,4 +1,5 @@
 <script>
+	let termsAccepted = false;
 </script>
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
@@ -90,6 +91,7 @@
 								id="terms"
 								name="terms"
 								type="checkbox"
+								bind:checked={termsAccepted}
 								class="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900"
 							/>
 							<label for="terms" class="text-sm/6 text-white"
@@ -108,8 +110,10 @@
 				<div class="mt-8 flex justify-end">
 					<button
 						type="submit"
-						class="rounded-md bg-indigo-400 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-						>Зарегистрироваться</button
+						disabled={!termsAccepted}
+						class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 {termsAccepted
+							? 'bg-indigo-400 hover:bg-pink-400'
+							: 'cursor-not-allowed bg-gray-600'}">Зарегистрироваться</button
 					>
 				</div>
 			</form>

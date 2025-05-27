@@ -1,3 +1,7 @@
+<script>
+	let termsAccepted = false;
+</script>
+
 <div class="relative isolate bg-gray-900">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
 		<div class="relative mt-2 px-6 pt-16 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
@@ -216,12 +220,30 @@
 							></textarea>
 						</div>
 					</div>
+					<div class="sm:col-span-2">
+						<div class="flex items-center gap-x-3">
+							<input
+								id="terms"
+								name="terms"
+								type="checkbox"
+								class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+								bind:checked={termsAccepted}
+							/>
+							<label for="terms" class="text-sm text-gray-300">
+								Я согласен с <a href="/terms" class="text-indigo-400 hover:text-indigo-300"
+									>условиями оферты</a
+								>
+							</label>
+						</div>
+					</div>
 				</div>
 				<div class="mt-8 flex justify-end">
 					<button
 						type="submit"
-						class="rounded-md bg-indigo-400 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-						>Отправить в работу</button
+						disabled={!termsAccepted}
+						class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 {termsAccepted
+							? 'bg-indigo-400 hover:bg-pink-400'
+							: 'cursor-not-allowed bg-gray-600'}">Отправить в работу</button
 					>
 				</div>
 			</div>
