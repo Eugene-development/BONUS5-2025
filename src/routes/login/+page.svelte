@@ -1,6 +1,11 @@
 <script>
+	import { enhance } from '$app/forms';
 	import { login, auth } from '$lib/state/auth.svelte.js';
 	import { goto } from '$app/navigation';
+
+	// Import form data from server action
+	/** @type {import('./$types').PageProps} */
+	let { form } = $props();
 
 	// Form state using Svelte 5 runes
 	let formData = $state({
@@ -16,8 +21,40 @@
 		general: ''
 	});
 
-	// Handle form submission
-	async function handleSubmit() {
+	// Watch for form changes (server-side validation)
+	$effect(() => {
+		if (form?.error) {
+			errors.general = form.message;
+
+			// Preserve form values
+			if (form.email) {
+				formData.email = String(form.email);
+			}
+
+			if (form.rememberMe) {
+				formData.rememberMe = Boolean(form.rememberMe);
+			}
+		}
+
+		// Handle successful authentication
+		if (form?.success) {
+			// Ensure user object has required properties
+			auth.user = {
+				id: 1, // Add required id property
+				...form.user
+			};
+			auth.isAuthenticated = true;
+			goto('/');
+		}
+	});
+
+	/**
+	 * Form submission action using enhance
+	 * @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event
+	 */
+	function sendFormData(event) {
+		event.preventDefault();
+
 		// Reset errors
 		errors = {
 			email: '',
@@ -25,31 +62,54 @@
 			general: ''
 		};
 
-		// Basic validation
+		// Basic validation (client-side)
 		if (!formData.email) {
 			errors.email = 'Email обязателен';
-			return;
+			return false;
 		}
 
 		if (!formData.password) {
 			errors.password = 'Пароль обязателен';
-			return;
+			return false;
 		}
 
-		try {
-			const success = await login(formData.email, formData.password, formData.rememberMe);
-
-			if (success) {
-				// Redirect to dashboard on successful login
-				goto('/');
-			} else {
-				errors.general = auth.error || 'Ошибка авторизации';
-			}
-		} catch (error) {
-			errors.general = 'Произошла ошибка при отправке формы';
-			console.error('Login error:', error);
-		}
+		return true;
 	}
+
+	/**
+	 * Enhanced form submission handler
+	 */
+	const handleSubmit = () => {
+		// Update UI state before submitting
+		auth.loading = true;
+
+		/**
+		 * @param {{ result: import('@sveltejs/kit').ActionResult }} param0
+		 */
+		return async ({ result }) => {
+			try {
+				// Update authentication state based on result
+				if (result.type === 'success' && result.data?.success) {
+					auth.user = {
+						id: 1, // Add required id property
+						...result.data.user
+					};
+					auth.isAuthenticated = true;
+					auth.error = null;
+
+					// Navigate to home page
+					goto('/');
+				} else if (result.type === 'failure') {
+					auth.error = result.data?.message || 'Ошибка авторизации';
+				}
+			} catch (error) {
+				console.error('Login error:', error);
+				auth.error = 'Произошла ошибка при отправке формы';
+			} finally {
+				auth.loading = false;
+			}
+		};
+	};
 </script>
 
 <div class="relative isolate min-h-screen bg-gray-900 py-24 sm:py-32">
@@ -60,13 +120,13 @@
 		</div>
 
 		<div class="mx-auto mt-16 max-w-xl">
-			{#if errors.general}
+			{#if errors.general || auth.error}
 				<div class="mb-6 rounded-md bg-red-500/10 p-4 text-red-400">
-					{errors.general}
+					{errors.general || auth.error}
 				</div>
 			{/if}
 
-			<form on:submit|preventDefault={handleSubmit} class="space-y-8">
+			<form method="POST" onsubmit={sendFormData} use:enhance={handleSubmit} class="space-y-8">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-1">
 					<div class="sm:col-span-1">
 						<label for="email" class="block text-sm/6 font-semibold text-white">Email</label>
@@ -116,7 +176,9 @@
 								/>
 								<label for="remember-me" class="text-sm/6 text-white">Запомнить меня</label>
 							</div>
-							<a href="#" class="text-sm font-semibold text-indigo-400 hover:text-indigo-300"
+							<a
+								href="/forgot-password"
+								class="text-sm font-semibold text-indigo-400 hover:text-indigo-300"
 								>Забыли пароль?</a
 							>
 						</div>
