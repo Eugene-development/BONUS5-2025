@@ -1,6 +1,11 @@
 <script>
+	import { enhance } from '$app/forms';
 	import { register, auth } from '$lib/state/auth.svelte.js';
 	import { goto } from '$app/navigation';
+
+	// Import form data from server action
+	/** @type {import('./$types').PageProps} */
+	let { form } = $props();
 
 	// Form state using Svelte 5 runes
 	let formData = $state({
@@ -23,8 +28,45 @@
 		general: ''
 	});
 
-	// Handle form submission
-	async function handleSubmit() {
+	// Watch for form changes (server-side validation)
+	$effect(() => {
+		if (form?.error) {
+			errors.general = form.message;
+
+			// Preserve form values
+			if (form.firstName) {
+				formData.firstName = String(form.firstName);
+			}
+
+			if (form.city) {
+				formData.city = String(form.city);
+			}
+
+			if (form.email) {
+				formData.email = String(form.email);
+			}
+		}
+
+		// Handle successful authentication
+		if (form?.success) {
+			// Ensure user object has required properties
+			auth.user = {
+				id: 1, // Add required id property
+				name: String(form.user.name),
+				email: String(form.user.email)
+			};
+			auth.isAuthenticated = true;
+			goto('/');
+		}
+	});
+
+	/**
+	 * Form submission handler (sendFormPrice)
+	 * @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event
+	 */
+	function sendFormPrice(event) {
+		event.preventDefault();
+
 		// Reset errors
 		errors = {
 			firstName: '',
@@ -36,67 +78,85 @@
 			general: ''
 		};
 
-		// Basic validation
+		// Basic validation (client-side)
 		if (!formData.firstName) {
 			errors.firstName = 'Имя обязательно';
-			return;
+			return false;
 		}
 
 		if (!formData.city) {
 			errors.city = 'Город обязателен';
-			return;
+			return false;
 		}
 
 		if (!formData.email) {
 			errors.email = 'Email обязателен';
-			return;
+			return false;
 		}
 
 		if (!formData.password) {
 			errors.password = 'Пароль обязателен';
-			return;
+			return false;
 		}
 
 		if (formData.password.length < 8) {
 			errors.password = 'Пароль должен содержать минимум 8 символов';
-			return;
+			return false;
 		}
 
 		if (!formData.passwordConfirm) {
 			errors.passwordConfirm = 'Подтверждение пароля обязательно';
-			return;
+			return false;
 		}
 
 		if (formData.password !== formData.passwordConfirm) {
 			errors.passwordConfirm = 'Пароли не совпадают';
-			return;
+			return false;
 		}
 
 		if (!formData.termsAccepted) {
 			errors.terms = 'Необходимо принять условия';
-			return;
+			return false;
 		}
 
-		try {
-			const success = await register({
-				firstName: formData.firstName,
-				city: formData.city,
-				email: formData.email,
-				password: formData.password,
-				password_confirmation: formData.passwordConfirm
-			});
-
-			if (success) {
-				// Redirect to dashboard on successful registration
-				goto('/');
-			} else {
-				errors.general = auth.error || 'Ошибка регистрации';
-			}
-		} catch (error) {
-			errors.general = 'Произошла ошибка при отправке формы';
-			console.error('Registration error:', error);
-		}
+		return true;
 	}
+
+	/**
+	 * Enhanced form submission handler
+	 */
+	const handleSubmit = () => {
+		// Update UI state before submitting
+		auth.loading = true;
+
+		/**
+		 * @param {{ result: import('@sveltejs/kit').ActionResult }} param0
+		 */
+		return async ({ result }) => {
+			try {
+				// Update authentication state based on result
+				if (result.type === 'success' && result.data?.success) {
+					auth.user = {
+						id: 1, // Add required id property
+						name: String(result.data.user.name),
+						email: String(result.data.user.email)
+					};
+					auth.isAuthenticated = true;
+					auth.error = null;
+
+					// Navigate to home page
+					goto('/');
+				} else if (result.type === 'failure') {
+					auth.error = result.data?.message || 'Ошибка регистрации';
+				}
+			} catch (error) {
+				console.error('Registration error:', error);
+				auth.error = 'Произошла ошибка при отправке формы';
+			} finally {
+				auth.loading = false;
+			}
+		};
+	};
 </script>
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
@@ -111,13 +171,13 @@
 		</div>
 
 		<div class="mx-auto mt-16 max-w-xl">
-			{#if errors.general}
+			{#if errors.general || auth.error}
 				<div class="mb-6 rounded-md bg-red-500/10 p-4 text-red-400">
-					{errors.general}
+					{errors.general || auth.error}
 				</div>
 			{/if}
 
-			<form on:submit|preventDefault={handleSubmit} class="space-y-8">
+			<form method="POST" onsubmit={sendFormPrice} use:enhance={handleSubmit} class="space-y-8">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
 						<label for="first-name" class="block text-sm/6 font-semibold text-white">Ваше имя</label
