@@ -1,5 +1,6 @@
 <script>
 	let termsAccepted = false;
+	import bonusImage from './img/Gemini_Generated_Image_iowmgviowmgviowm.png';
 </script>
 
 <div class="relative isolate bg-gray-900">
@@ -49,8 +50,12 @@
 					BONUS 5
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
-					Отправьте контакты потенциального клиента<sup>*</sup> нашим партнёрам и получите бонус 5%,
-					если сделка состоится.
+					Зарегистрируйтесь и отправьте контакты потенциального клиента нашим партнёрам<sup>*</sup> и
+					получите бонус 5%.
+				</p>
+				<p class="mt-6 text-lg/8 text-gray-300">
+					Или станьте зарегистрированным пользователем и получите 5% кэшбэк, если приобретаете для
+					самого себя.
 				</p>
 				<dl class="mt-10 space-y-4 text-base/7 text-gray-300">
 					<div class="flex gap-x-4">
@@ -149,7 +154,16 @@
 				</dl>
 			</div>
 		</div>
-		<form action="#" method="POST" class="mt-4 px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
+
+		<div class="flex items-center justify-center sm:ml-12">
+			<img
+				src={bonusImage}
+				alt="Бонусная программа"
+				class="my-6 h-auto max-w-full rounded-lg shadow-lg"
+			/>
+		</div>
+
+		<!-- <form action="#" method="POST" class="mt-4 px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
@@ -248,7 +262,7 @@
 					>
 				</div>
 			</div>
-		</form>
+		</form> -->
 	</div>
 	<div class="px-6 pb-6">
 		<p class="text-sm text-gray-400">* только с согласия клиента</p>
