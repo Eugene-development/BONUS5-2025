@@ -40,44 +40,26 @@ export async function login(email, password, remember = false) {
 	auth.error = null;
 
 	try {
-		// TODO: Replace with actual API call to Laravel Sanctum
-		// const response = await fetch('/api/login', {
-		//   method: 'POST',
-		//   headers: {
-		//     'Content-Type': 'application/json',
-		//     'Accept': 'application/json',
-		//     'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
-		//   },
-		//   body: JSON.stringify({ email, password, remember }),
-		//   credentials: 'include'
-		// });
+		// Import auth API functions dynamically to avoid circular dependencies
+		const { loginUser } = await import('$lib/api/auth.js');
 
-		// const data = await response.json();
+		const result = await loginUser(email, password, remember);
 
-		// if (!response.ok) {
-		//   throw new Error(data.message || 'Login failed');
-		// }
-
-		// auth.user = data.user;
-		// auth.isAuthenticated = true;
-
-		// For testing without backend
-		console.log('Login attempt:', { email, password, remember });
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		if (email === 'test@example.com' && password === 'password') {
+		if (result.success) {
 			auth.user = {
-				id: 1,
-				name: 'Test User',
-				email
+				id: result.user.id || 1,
+				name: result.user.name || result.user.email,
+				email: result.user.email
 			};
 			auth.isAuthenticated = true;
 			return true;
 		} else {
-			throw new Error('Invalid credentials');
+			auth.error = result.message || 'Ошибка авторизации';
+			return false;
 		}
 	} catch (error) {
-		auth.error = error instanceof Error ? error.message : 'Unknown error';
+		console.error('Login error:', error);
+		auth.error = 'Произошла ошибка при входе';
 		return false;
 	} finally {
 		auth.loading = false;
@@ -86,7 +68,7 @@ export async function login(email, password, remember = false) {
 
 /**
  * Function to handle user registration
- * @param {{ firstName: string, city: string, email: string, password: string, password_confirmation: string }} userData - User registration data
+ * @param {any} userData - User registration data
  * @returns {Promise<boolean>} - Success status
  */
 export async function register(userData) {
@@ -94,40 +76,26 @@ export async function register(userData) {
 	auth.error = null;
 
 	try {
-		// TODO: Replace with actual API call to Laravel Sanctum
-		// const response = await fetch('/api/register', {
-		//   method: 'POST',
-		//   headers: {
-		//     'Content-Type': 'application/json',
-		//     'Accept': 'application/json',
-		//     'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
-		//   },
-		//   body: JSON.stringify(userData),
-		//   credentials: 'include'
-		// });
+		// Import auth API functions dynamically to avoid circular dependencies
+		const { registerUser } = await import('$lib/api/auth.js');
 
-		// const data = await response.json();
+		const result = await registerUser(userData);
 
-		// if (!response.ok) {
-		//   throw new Error(data.message || 'Registration failed');
-		// }
-
-		// auth.user = data.user;
-		// auth.isAuthenticated = true;
-
-		// For testing without backend
-		console.log('Registration attempt:', userData);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		auth.user = {
-			id: 1,
-			name: userData.firstName,
-			email: userData.email
-		};
-		auth.isAuthenticated = true;
-		return true;
+		if (result.success) {
+			auth.user = {
+				id: result.user.id || 1,
+				name: result.user.name || userData.firstName,
+				email: result.user.email || userData.email
+			};
+			auth.isAuthenticated = true;
+			return true;
+		} else {
+			auth.error = result.message || 'Ошибка регистрации';
+			return false;
+		}
 	} catch (error) {
-		auth.error = error instanceof Error ? error.message : 'Unknown error';
+		console.error('Registration error:', error);
+		auth.error = 'Произошла ошибка при регистрации';
 		return false;
 	} finally {
 		auth.loading = false;
@@ -143,32 +111,28 @@ export async function logout() {
 	auth.error = null;
 
 	try {
-		// TODO: Replace with actual API call to Laravel Sanctum
-		// const response = await fetch('/api/logout', {
-		//   method: 'POST',
-		//   headers: {
-		//     'Content-Type': 'application/json',
-		//     'Accept': 'application/json',
-		//     'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
-		//   },
-		//   credentials: 'include'
-		// });
+		// Import auth API functions dynamically to avoid circular dependencies
+		const { logoutUser } = await import('$lib/api/auth.js');
 
-		// if (!response.ok) {
-		//   const data = await response.json();
-		//   throw new Error(data.message || 'Logout failed');
-		// }
+		const result = await logoutUser();
 
-		// For testing without backend
-		console.log('Logout attempt');
-		await new Promise((resolve) => setTimeout(resolve, 500));
-
+		// Always clear local state regardless of API response
 		auth.user = null;
 		auth.isAuthenticated = false;
-		return true;
+
+		if (result.success) {
+			return true;
+		} else {
+			console.warn('Logout API failed, but local state cleared:', result.message);
+			return true; // Still return true since local state is cleared
+		}
 	} catch (error) {
-		auth.error = error instanceof Error ? error.message : 'Unknown error';
-		return false;
+		console.error('Logout error:', error);
+		// Even if logout request fails, clear local state
+		auth.user = null;
+		auth.isAuthenticated = false;
+		auth.error = null; // Don't show error for logout
+		return true;
 	} finally {
 		auth.loading = false;
 	}
@@ -183,39 +147,29 @@ export async function checkAuth() {
 	auth.error = null;
 
 	try {
-		// TODO: Replace with actual API call to Laravel Sanctum
-		// const response = await fetch('/api/user', {
-		//   method: 'GET',
-		//   headers: {
-		//     'Content-Type': 'application/json',
-		//     'Accept': 'application/json'
-		//   },
-		//   credentials: 'include'
-		// });
+		// Import auth API functions dynamically to avoid circular dependencies
+		const { getCurrentUser } = await import('$lib/api/auth.js');
 
-		// if (response.status === 401) {
-		//   auth.user = null;
-		//   auth.isAuthenticated = false;
-		//   return false;
-		// }
+		const result = await getCurrentUser();
 
-		// const data = await response.json();
-		// auth.user = data;
-		// auth.isAuthenticated = true;
-		// return true;
-
-		// For testing without backend
-		console.log('Check auth attempt');
-		await new Promise((resolve) => setTimeout(resolve, 500));
-
-		// For now, always return not authenticated
-		auth.user = null;
-		auth.isAuthenticated = false;
-		return false;
+		if (result.success && result.user) {
+			auth.user = {
+				id: result.user.id || 1,
+				name: result.user.name || result.user.email,
+				email: result.user.email
+			};
+			auth.isAuthenticated = true;
+			return true;
+		} else {
+			auth.user = null;
+			auth.isAuthenticated = false;
+			return false;
+		}
 	} catch (error) {
-		auth.error = error instanceof Error ? error.message : 'Unknown error';
+		console.error('Auth check error:', error);
 		auth.user = null;
 		auth.isAuthenticated = false;
+		auth.error = null; // Don't show error for auth check
 		return false;
 	} finally {
 		auth.loading = false;

@@ -9,11 +9,11 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const formData = await request.formData();
 
-		const firstName = formData.get('first-name');
-		const city = formData.get('city');
-		const email = formData.get('email');
-		const password = formData.get('password');
-		const passwordConfirm = formData.get('password-confirm');
+		const firstName = String(formData.get('first-name') || '');
+		const city = String(formData.get('city') || '');
+		const email = String(formData.get('email') || '');
+		const password = String(formData.get('password') || '');
+		const passwordConfirm = String(formData.get('password-confirm') || '');
 		const termsAccepted = formData.get('terms') === 'on';
 
 		// Basic validation
@@ -98,49 +98,36 @@ export const actions = {
 		}
 
 		try {
-			// TODO: Replace with actual API call to Laravel Sanctum
-			// This is just a simulation for now
+			// Proxy to Laravel API
+			const { registerUser } = await import('$lib/api/auth.js');
 
-			// For a real implementation with Sanctum:
-			// 1. Get CSRF cookie
-			// const csrfCookie = await fetch('/sanctum/csrf-cookie');
-
-			// 2. Send registration request
-			// const response = await fetch('/api/register', {
-			//   method: 'POST',
-			//   headers: {
-			//     'Content-Type': 'application/json',
-			//     'Accept': 'application/json',
-			//     'X-XSRF-TOKEN': getCookie(cookies, 'XSRF-TOKEN')
-			//   },
-			//   body: JSON.stringify({
-			//     name: firstName,
-			//     city,
-			//     email,
-			//     password,
-			//     password_confirmation: passwordConfirm
-			//   }),
-			//   credentials: 'include'
-			// });
-
-			// 3. Check response and return result
-			// if (!response.ok) {
-			//   const data = await response.json();
-			//   return fail(response.status, {
-			//     firstName, city, email,
-			//     error: true,
-			//     message: data.message || 'Ошибка регистрации'
-			//   });
-			// }
-
-			// Success simulation
-			return {
-				success: true,
-				user: {
-					email,
-					name: firstName
-				}
+			const userData = {
+				firstName,
+				city,
+				email,
+				password,
+				password_confirmation: passwordConfirm,
+				terms_accepted: termsAccepted
 			};
+
+			const result = await registerUser(userData);
+
+			if (result.success) {
+				return {
+					success: true,
+					user: result.user,
+					message: result.message
+				};
+			} else {
+				return fail(422, {
+					firstName,
+					city,
+					email,
+					error: true,
+					message: result.message || 'Ошибка регистрации',
+					errors: result.errors
+				});
+			}
 		} catch (error) {
 			console.error('Registration error:', error);
 

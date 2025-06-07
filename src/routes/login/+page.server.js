@@ -9,8 +9,8 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const formData = await request.formData();
 
-		const email = formData.get('email');
-		const password = formData.get('password');
+		const email = String(formData.get('email') || '');
+		const password = String(formData.get('password') || '');
 		const rememberMe = formData.get('remember-me') === 'on';
 
 		// Basic validation
@@ -33,53 +33,25 @@ export const actions = {
 		}
 
 		try {
-			// TODO: Replace with actual authentication API call
-			// This is just a simulation for now
-			if (email === 'test@example.com' && password === 'password') {
-				// For a real implementation with Sanctum:
-				// 1. Get CSRF cookie
-				// const csrfCookie = await fetch('/sanctum/csrf-cookie');
+			// Proxy to Laravel API
+			const { loginUser } = await import('$lib/api/auth.js');
 
-				// 2. Send login request
-				// const response = await fetch('/api/login', {
-				//   method: 'POST',
-				//   headers: {
-				//     'Content-Type': 'application/json',
-				//     'Accept': 'application/json',
-				//     'X-XSRF-TOKEN': getCookie(cookies, 'XSRF-TOKEN')
-				//   },
-				//   body: JSON.stringify({ email, password, remember: rememberMe }),
-				//   credentials: 'include'
-				// });
+			const result = await loginUser(email, password, rememberMe);
 
-				// 3. Check response and return result
-				// if (!response.ok) {
-				//   const data = await response.json();
-				//   return fail(response.status, {
-				//     email,
-				//     rememberMe,
-				//     error: true,
-				//     message: data.message || 'Ошибка авторизации'
-				//   });
-				// }
-
-				// Success simulation
+			if (result.success) {
 				return {
 					success: true,
-					user: {
-						email,
-						name: 'Test User'
-					}
+					user: result.user,
+					message: result.message
 				};
+			} else {
+				return fail(401, {
+					email,
+					rememberMe,
+					error: true,
+					message: result.message || 'Ошибка авторизации'
+				});
 			}
-
-			// Simulate authentication failure
-			return fail(401, {
-				email,
-				rememberMe,
-				error: true,
-				message: 'Неверный email или пароль'
-			});
 		} catch (error) {
 			console.error('Login error:', error);
 
