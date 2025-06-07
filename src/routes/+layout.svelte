@@ -2,15 +2,28 @@
 	import '../app.css';
 	import { Menu } from './layout/header/UI';
 	import { Component } from './layout/footer/UI';
+	import { auth } from '$lib/state/auth.svelte.js';
 	import { onMount } from 'svelte';
-	import { checkAuth, auth } from '$lib/state/auth.svelte.js';
 
-	// Check authentication state when the app loads
-	onMount(async () => {
-		await checkAuth();
+	/** @type {import('./$types').LayoutProps} */
+	let { data, children } = $props();
+
+	// Синхронизируем server-side данные с client-side store при загрузке
+	onMount(() => {
+		if (data.isAuthenticated && data.user) {
+			auth.user = {
+				id: data.user.id || 1,
+				name: data.user.name || data.user.email,
+				email: data.user.email
+			};
+			auth.isAuthenticated = true;
+		} else {
+			auth.user = null;
+			auth.isAuthenticated = false;
+		}
+		auth.loading = false;
+		auth.error = null;
 	});
-
-	let { children } = $props();
 </script>
 
 <header class="bg-gray-900">

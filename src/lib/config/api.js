@@ -1,16 +1,15 @@
 /**
- * API Configuration for Laravel Sanctum Integration
- * Provides base URLs, headers, and helper functions for CSRF management
+ * API Configuration for SvelteKit Internal Routes
+ * Provides configuration for internal API routes that proxy to Laravel
  */
 
 // API Configuration
 export const API_CONFIG = {
-	// Laravel API base URL
-	baseUrl: 'http://127.0.0.1:8000',
+	// Use SvelteKit internal API routes (they proxy to Laravel)
+	baseUrl: '',
 
-	// API endpoints
+	// API endpoints (internal SvelteKit routes)
 	endpoints: {
-		csrf: '/sanctum/csrf-cookie',
 		login: '/api/login',
 		register: '/api/register',
 		logout: '/api/logout',
@@ -26,6 +25,15 @@ export const API_CONFIG = {
 	// Request timeout in milliseconds
 	timeout: 10000
 };
+
+/**
+ * Build full API URL
+ * @param {string} endpoint - API endpoint path
+ * @returns {string} Full URL
+ */
+export function buildApiUrl(endpoint) {
+	return `${API_CONFIG.baseUrl}${endpoint}`;
+}
 
 /**
  * Get CSRF token from cookies
@@ -61,15 +69,6 @@ export function getCookie(name) {
 		}
 	}
 	return null;
-}
-
-/**
- * Build full API URL
- * @param {string} endpoint - API endpoint path
- * @returns {string} Full URL
- */
-export function buildApiUrl(endpoint) {
-	return `${API_CONFIG.baseUrl}${endpoint}`;
 }
 
 /**

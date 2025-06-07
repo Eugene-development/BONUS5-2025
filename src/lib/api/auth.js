@@ -4,16 +4,7 @@
  */
 
 import { API_CONFIG } from '$lib/config/api.js';
-import { fetchCsrfCookie, post, get, ApiError } from '$lib/api/client.js';
-
-/**
- * Prepare for authentication by fetching CSRF cookie
- * Should be called before any auth operations
- * @returns {Promise<void>}
- */
-export async function initAuth() {
-	await fetchCsrfCookie();
-}
+import { post, get, ApiError } from '$lib/api/client.js';
 
 /**
  * Login user with email and password
@@ -24,8 +15,8 @@ export async function initAuth() {
  */
 export async function loginUser(email, password, remember = false) {
 	try {
-		// Ensure CSRF cookie is available
-		await initAuth();
+		console.log('🔐 loginUser called with:', { email, password: '***', remember });
+		console.log('🌐 Using endpoint:', API_CONFIG.endpoints.login);
 
 		const response = await post(API_CONFIG.endpoints.login, {
 			email,
@@ -33,13 +24,19 @@ export async function loginUser(email, password, remember = false) {
 			remember
 		});
 
+		console.log('✅ loginUser success:', response);
+
 		return {
 			success: true,
 			user: response.user,
 			message: response.message
 		};
 	} catch (error) {
+		console.error('❌ loginUser error:', error);
+
 		if (error instanceof ApiError) {
+			console.log('📊 Error details:', { status: error.status, data: error.data });
+
 			if (error.status === 422) {
 				// Validation errors
 				return {
@@ -77,9 +74,6 @@ export async function loginUser(email, password, remember = false) {
  */
 export async function registerUser(userData) {
 	try {
-		// Ensure CSRF cookie is available
-		await initAuth();
-
 		// Map firstName to name for Laravel backend
 		const requestData = {
 			name: userData.firstName,

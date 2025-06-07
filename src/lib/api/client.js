@@ -1,9 +1,9 @@
 /**
- * HTTP Client for Laravel Sanctum API Integration
- * Handles CSRF tokens, authentication, and error responses
+ * HTTP Client for SvelteKit API Integration
+ * Simple client for internal SvelteKit API routes
  */
 
-import { API_CONFIG, buildApiUrl, prepareHeaders } from '$lib/config/api.js';
+import { API_CONFIG, buildApiUrl } from '$lib/config/api.js';
 
 /**
  * API Error class for structured error handling
@@ -23,28 +23,7 @@ export class ApiError extends Error {
 }
 
 /**
- * Fetch CSRF cookie from Laravel Sanctum
- * Must be called before any authenticated requests
- * @returns {Promise<void>}
- */
-export async function fetchCsrfCookie() {
-	try {
-		const response = await fetch(buildApiUrl(API_CONFIG.endpoints.csrf), {
-			method: 'GET',
-			credentials: 'include'
-		});
-
-		if (!response.ok) {
-			throw new ApiError('Failed to fetch CSRF cookie', response.status);
-		}
-	} catch (error) {
-		console.error('CSRF cookie fetch failed:', error);
-		throw error;
-	}
-}
-
-/**
- * Make authenticated API request with automatic CSRF handling
+ * Make API request to SvelteKit internal endpoints
  * @param {string} endpoint - API endpoint path
  * @param {any} options - Request options
  * @returns {Promise<any>} Response data
@@ -53,8 +32,8 @@ export async function apiRequest(endpoint, options = {}) {
 	const { method = 'GET', body = null, headers = {} } = options;
 
 	try {
-		// Prepare request headers with CSRF token
-		const requestHeaders = prepareHeaders(headers);
+		// Prepare request headers
+		const requestHeaders = Object.assign({}, API_CONFIG.defaultHeaders, headers);
 
 		// Build request configuration
 		/** @type {RequestInit} */

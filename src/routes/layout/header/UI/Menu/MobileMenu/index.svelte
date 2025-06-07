@@ -61,6 +61,12 @@
 					</div>
 					<div class="py-6">
 						{#if auth.isAuthenticated}
+							<a
+								href="/dashboard"
+								class="-mx-3 mb-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
+							>
+								Личный кабинет
+							</a>
 							<button
 								onclick={async () => {
 									await logout();

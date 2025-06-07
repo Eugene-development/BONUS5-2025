@@ -44,6 +44,7 @@
 	</div>
 	<div class="hidden *:tracking-widest lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
 		{#if auth.isAuthenticated}
+			<a href="/dashboard" class="mr-4 text-sm/6 font-normal text-white">Личный кабинет</a>
 			<button
 				onclick={logout}
 				class="text-sm/6 font-normal text-white transition-colors hover:text-gray-300"
