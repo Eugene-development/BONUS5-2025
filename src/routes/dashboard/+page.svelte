@@ -1,9 +1,28 @@
 <script>
 	import { auth, logout } from '$lib/state/auth.svelte.js';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	/** @type {import('./$types').PageProps} */
 	let { data } = $props();
+
+	// Объединяем серверные данные с клиентским состоянием
+	let currentUser = $derived(auth.user || data.user);
+	let isAuthenticated = $derived(auth.isAuthenticated || data.isAuthenticated);
+
+	// Синхронизируем серверные данные с клиентским состоянием при загрузке
+	onMount(() => {
+		if (data.isAuthenticated && data.user && !auth.user) {
+			console.log('🔄 Syncing server data to client state:', data.user);
+			auth.user = {
+				id: data.user.id || 1,
+				name: data.user.name || data.user.email,
+				email: data.user.email
+			};
+			auth.isAuthenticated = true;
+			auth.loading = false;
+		}
+	});
 
 	// Handle logout with redirect
 	async function handleLogout() {
@@ -20,7 +39,7 @@
 		<div class="mx-auto mb-16 text-center">
 			<h1 class="text-4xl font-normal tracking-widest text-white sm:text-6xl">Личный кабинет</h1>
 			<p class="mt-6 text-lg/8 text-gray-300">
-				{data.message}
+				{data.message || `Добро пожаловать, ${currentUser?.name || 'пользователь'}!`}
 			</p>
 		</div>
 
@@ -32,16 +51,18 @@
 
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<div>
-					<label class="mb-2 block text-sm font-medium text-gray-300"> Имя </label>
-					<div class="rounded-md bg-white/10 px-4 py-3 text-lg text-white">
-						{data.user?.name || 'Не указано'}
+					<label for="user-name" class="mb-2 block text-sm font-medium text-gray-300"> Имя </label>
+					<div id="user-name" class="rounded-md bg-white/10 px-4 py-3 text-lg text-white">
+						{currentUser?.name || 'Не указано'}
 					</div>
 				</div>
 
 				<div>
-					<label class="mb-2 block text-sm font-medium text-gray-300"> Email </label>
-					<div class="rounded-md bg-white/10 px-4 py-3 text-lg text-white">
-						{data.user?.email || 'Не указано'}
+					<label for="user-email" class="mb-2 block text-sm font-medium text-gray-300">
+						Email
+					</label>
+					<div id="user-email" class="rounded-md bg-white/10 px-4 py-3 text-lg text-white">
+						{currentUser?.email || 'Не указано'}
 					</div>
 				</div>
 			</div>

@@ -8,9 +8,10 @@
 	/** @type {import('./$types').LayoutProps} */
 	let { data, children } = $props();
 
-	// Синхронизируем server-side данные с client-side store при загрузке
-	onMount(() => {
+	// Синхронизируем server-side данные с client-side store при загрузке и изменениях
+	function syncAuthData() {
 		if (data.isAuthenticated && data.user) {
+			console.log('🔄 Syncing server data to client state:', data.user);
 			auth.user = {
 				id: data.user.id || 1,
 				name: data.user.name || data.user.email,
@@ -23,6 +24,17 @@
 		}
 		auth.loading = false;
 		auth.error = null;
+	}
+
+	onMount(() => {
+		syncAuthData();
+	});
+
+	// Реактивно синхронизируем данные при изменениях
+	$effect(() => {
+		if (data.isAuthenticated !== undefined) {
+			syncAuthData();
+		}
 	});
 </script>
 

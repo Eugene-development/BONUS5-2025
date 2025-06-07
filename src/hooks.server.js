@@ -7,8 +7,17 @@ export async function handle({ event, resolve }) {
 	const xsrfToken = event.cookies.get('XSRF-TOKEN');
 
 	// Пользователь считается аутентифицированным если есть обе cookie
-	event.locals.isAuthenticated = !!(laravelSession && xsrfToken);
+	// Более мягкая проверка - достаточно laravel_session
+	event.locals.isAuthenticated = !!laravelSession;
 	event.locals.authToken = laravelSession;
+
+	// Добавляем дополнительную информацию для отладки
+	console.log('🔍 Auth check:', {
+		path: event.url.pathname,
+		laravelSession: !!laravelSession,
+		xsrfToken: !!xsrfToken,
+		isAuthenticated: event.locals.isAuthenticated
+	});
 
 	return resolve(event);
 }

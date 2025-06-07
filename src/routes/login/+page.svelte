@@ -1,6 +1,6 @@
 <script>
 	import { login, auth } from '$lib/state/auth.svelte.js';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 
@@ -57,7 +57,11 @@
 			const success = await login(formData.email, formData.password, formData.rememberMe);
 
 			if (success) {
-				console.log('✅ Login successful, redirecting to:', redirectTo);
+				console.log('✅ Login successful, invalidating all data...');
+				// Принудительно обновляем все серверные данные
+				await invalidateAll();
+
+				console.log('🔄 Redirecting to:', redirectTo);
 				// Redirect to the original destination or dashboard
 				goto(redirectTo);
 			} else {
