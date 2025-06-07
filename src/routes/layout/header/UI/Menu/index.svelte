@@ -1,5 +1,6 @@
 <script>
 	import { visibleMobileMenu } from '$lib/state/visibleMobileMenu.svelte';
+	import { auth, logout } from '$lib/state/auth.svelte.js';
 	import MobileMenu from './MobileMenu/index.svelte';
 </script>
 
@@ -42,8 +43,17 @@
 		<a href="/152fz" class="text-sm/6 font-normal text-white">152 ФЗ</a>
 	</div>
 	<div class="hidden *:tracking-widest lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
-		<a href="/login" class="mr-4 text-sm/6 font-normal text-white">Вход </a>
-		<a href="/registration" class="text-sm/6 font-normal text-white">Регистрация</a>
+		{#if auth.isAuthenticated}
+			<button
+				onclick={logout}
+				class="text-sm/6 font-normal text-white transition-colors hover:text-gray-300"
+			>
+				Выход
+			</button>
+		{:else}
+			<a href="/login" class="mr-4 text-sm/6 font-normal text-white">Вход</a>
+			<a href="/registration" class="text-sm/6 font-normal text-white">Регистрация</a>
+		{/if}
 	</div>
 </nav>
 

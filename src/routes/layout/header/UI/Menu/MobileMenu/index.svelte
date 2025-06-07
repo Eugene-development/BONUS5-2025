@@ -1,5 +1,6 @@
 <script>
 	import { visibleMobileMenu } from '$lib/state/visibleMobileMenu.svelte';
+	import { auth, logout } from '$lib/state/auth.svelte.js';
 </script>
 
 {#if visibleMobileMenu.value}
@@ -59,16 +60,28 @@
 						>
 					</div>
 					<div class="py-6">
-						<a
-							href="/login"
-							class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
-							>Вход</a
-						>
-						<a
-							href="/registration"
-							class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
-							>Регистрация</a
-						>
+						{#if auth.isAuthenticated}
+							<button
+								onclick={async () => {
+									await logout();
+									visibleMobileMenu.value = false;
+								}}
+								class="-mx-3 block w-full rounded-lg px-3 py-2.5 text-left text-base/7 font-semibold text-white hover:bg-gray-800"
+							>
+								Выход
+							</button>
+						{:else}
+							<a
+								href="/login"
+								class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
+								>Вход</a
+							>
+							<a
+								href="/registration"
+								class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
+								>Регистрация</a
+							>
+						{/if}
 					</div>
 				</div>
 			</div>
