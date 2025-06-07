@@ -36,16 +36,16 @@
 				console.log('🔄 Clearing client state and redirecting...');
 				// Принудительно перенаправляем на главную страницу
 				// Используем window.location для полной перезагрузки
-				window.location.href = '/';
+				// window.location.href = '/';
 			} else {
 				console.error('❌ Logout failed, but still redirecting...');
 				// Принудительный переход даже при ошибке API
-				window.location.href = '/';
+				// window.location.href = '/';
 			}
 		} catch (error) {
 			console.error('💥 Logout error:', error);
 			// Принудительный переход даже при ошибке
-			window.location.href = '/';
+			// window.location.href = '/';
 		}
 	}
 </script>
