@@ -10,12 +10,15 @@
  * @property {number} id - User ID
  * @property {string} name - User name
  * @property {string} email - User email
+ * @property {boolean} email_verified - Email verification status
+ * @property {string|null} email_verified_at - Email verification timestamp
  */
 
 /**
  * @typedef {Object} AuthState
  * @property {User|null} user - Current user
  * @property {boolean} isAuthenticated - Authentication status
+ * @property {boolean} emailVerified - Email verification status
  * @property {boolean} loading - Loading status
  * @property {string|null} error - Error message
  */
@@ -24,6 +27,7 @@
 export const auth = $state({
 	user: null,
 	isAuthenticated: false,
+	emailVerified: false,
 	loading: false,
 	error: null
 });
@@ -49,9 +53,12 @@ export async function login(email, password, remember = false) {
 			auth.user = {
 				id: result.user.id || 1,
 				name: result.user.name || result.user.email,
-				email: result.user.email
+				email: result.user.email,
+				email_verified: result.user.email_verified || false,
+				email_verified_at: result.user.email_verified_at || null
 			};
 			auth.isAuthenticated = true;
+			auth.emailVerified = result.user.email_verified || false;
 			return true;
 		} else {
 			auth.error = result.message || 'Ошибка авторизации';
@@ -85,9 +92,12 @@ export async function register(userData) {
 			auth.user = {
 				id: result.user.id || 1,
 				name: result.user.name || userData.firstName,
-				email: result.user.email || userData.email
+				email: result.user.email || userData.email,
+				email_verified: result.user.email_verified || false,
+				email_verified_at: result.user.email_verified_at || null
 			};
 			auth.isAuthenticated = true;
+			auth.emailVerified = result.user.email_verified || false;
 			return true;
 		} else {
 			auth.error = result.message || 'Ошибка регистрации';
@@ -164,19 +174,24 @@ export async function checkAuth() {
 			auth.user = {
 				id: result.user.id || 1,
 				name: result.user.name || result.user.email,
-				email: result.user.email
+				email: result.user.email,
+				email_verified: result.user.email_verified || false,
+				email_verified_at: result.user.email_verified_at || null
 			};
 			auth.isAuthenticated = true;
+			auth.emailVerified = result.user.email_verified || false;
 			return true;
 		} else {
 			auth.user = null;
 			auth.isAuthenticated = false;
+			auth.emailVerified = false;
 			return false;
 		}
 	} catch (error) {
 		console.error('Auth check error:', error);
 		auth.user = null;
 		auth.isAuthenticated = false;
+		auth.emailVerified = false;
 		auth.error = null; // Don't show error for auth check
 		return false;
 	} finally {
@@ -199,4 +214,58 @@ function getCookie(name) {
 		}
 	}
 	return null;
+}
+
+/**
+ * Function to send email verification
+ * @returns {Promise<boolean>} - Success status
+ */
+export async function sendEmailVerification() {
+	auth.loading = true;
+	auth.error = null;
+
+	try {
+		const { sendEmailVerification: sendVerification } = await import('$lib/api/auth.js');
+		const result = await sendVerification();
+
+		if (result.success) {
+			return true;
+		} else {
+			auth.error = result.message || 'Ошибка отправки письма';
+			return false;
+		}
+	} catch (error) {
+		console.error('Send email verification error:', error);
+		auth.error = 'Произошла ошибка при отправке письма';
+		return false;
+	} finally {
+		auth.loading = false;
+	}
+}
+
+/**
+ * Function to resend email verification
+ * @returns {Promise<boolean>} - Success status
+ */
+export async function resendEmailVerification() {
+	auth.loading = true;
+	auth.error = null;
+
+	try {
+		const { resendEmailVerification: resendVerification } = await import('$lib/api/auth.js');
+		const result = await resendVerification();
+
+		if (result.success) {
+			return true;
+		} else {
+			auth.error = result.message || 'Ошибка повторной отправки письма';
+			return false;
+		}
+	} catch (error) {
+		console.error('Resend email verification error:', error);
+		auth.error = 'Произошла ошибка при повторной отправке письма';
+		return false;
+	} finally {
+		auth.loading = false;
+	}
 }

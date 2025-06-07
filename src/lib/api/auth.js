@@ -181,6 +181,98 @@ export async function checkAuthentication() {
 }
 
 /**
+ * Send email verification notification
+ * @returns {Promise<{success: boolean, message?: string}>}
+ */
+export async function sendEmailVerification() {
+	try {
+		const response = await post('/api/email/verification-notification');
+
+		return {
+			success: true,
+			message: response.message || 'Письмо с подтверждением отправлено'
+		};
+	} catch (error) {
+		if (error instanceof ApiError) {
+			if (error.status === 422) {
+				return {
+					success: false,
+					// @ts-ignore
+					message: error.data?.message || 'Email уже подтвержден'
+				};
+			}
+		}
+
+		return {
+			success: false,
+			message: 'Произошла ошибка при отправке письма'
+		};
+	}
+}
+
+/**
+ * Resend email verification notification
+ * @returns {Promise<{success: boolean, message?: string}>}
+ */
+export async function resendEmailVerification() {
+	try {
+		const response = await post('/api/email/verify/resend');
+
+		return {
+			success: true,
+			message: response.message || 'Письмо с подтверждением отправлено повторно'
+		};
+	} catch (error) {
+		if (error instanceof ApiError) {
+			if (error.status === 422) {
+				return {
+					success: false,
+					// @ts-ignore
+					message: error.data?.message || 'Email уже подтвержден'
+				};
+			}
+		}
+
+		return {
+			success: false,
+			message: 'Произошла ошибка при повторной отправке письма'
+		};
+	}
+}
+
+/**
+ * Verify email with token (called from email link)
+ * @param {string} id - User ID
+ * @param {string} hash - Verification hash
+ * @returns {Promise<{success: boolean, user?: any, message?: string}>}
+ */
+export async function verifyEmail(id, hash) {
+	try {
+		const response = await get(`/api/email/verify/${id}/${hash}`);
+
+		return {
+			success: true,
+			user: response.user,
+			message: response.message || 'Email успешно подтвержден'
+		};
+	} catch (error) {
+		if (error instanceof ApiError) {
+			if (error.status === 403) {
+				return {
+					success: false,
+					message: 'Недействительная ссылка для подтверждения'
+				};
+			}
+		}
+
+		return {
+			success: false,
+			message: 'Произошла ошибка при подтверждении email'
+		};
+	}
+}
+
+/**
  * Map Laravel validation errors to frontend format
  * @param {Object} errors - Laravel validation errors
  * @returns {Object} Mapped errors

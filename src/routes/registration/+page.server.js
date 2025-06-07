@@ -98,11 +98,9 @@ export const actions = {
 		}
 
 		try {
-			// Proxy to Laravel API
-			const { registerUser } = await import('$lib/api/auth.js');
-
+			// Direct call to Laravel API (bypass client API to avoid serialization issues)
 			const userData = {
-				firstName,
+				name: firstName, // Laravel expects 'name', not 'firstName'
 				city,
 				email,
 				password,
@@ -110,9 +108,34 @@ export const actions = {
 				terms_accepted: termsAccepted
 			};
 
-			const result = await registerUser(userData);
+			const response = await fetch('http://localhost:8000/api/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				},
+				body: JSON.stringify(userData)
+			});
 
-			if (result.success) {
+			const result = await response.json();
+
+			if (response.ok) {
+				// Set Laravel session cookies
+				const setCookieHeaders = response.headers.getSetCookie();
+				setCookieHeaders.forEach((cookieString) => {
+					const [cookiePart] = cookieString.split(';');
+					const [name, value] = cookiePart.split('=');
+
+					if (name && value) {
+						cookies.set(name, value, {
+							path: '/',
+							httpOnly: name === 'laravel_session',
+							secure: false,
+							sameSite: 'lax'
+						});
+					}
+				});
+
 				return {
 					success: true,
 					user: result.user,

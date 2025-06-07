@@ -9,7 +9,13 @@ export async function load({ locals, url }) {
 		redirect(307, `/login?redirectTo=${encodeURIComponent(redirectTo)}`);
 	}
 
-	// Если пользователь авторизован, возвращаем данные
+	// Проверяем верификацию email
+	if (locals.user && !locals.user.email_verified) {
+		// Редирект на страницу верификации email
+		redirect(307, '/email-verify');
+	}
+
+	// Если пользователь авторизован и email подтвержден, возвращаем данные
 	return {
 		message: 'Добро пожаловать в личный кабинет!'
 	};

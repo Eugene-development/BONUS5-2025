@@ -17,7 +17,9 @@
 			auth.user = {
 				id: data.user.id || 1,
 				name: data.user.name || data.user.email,
-				email: data.user.email
+				email: data.user.email,
+				email_verified: data.user.email_verified ?? true,
+				email_verified_at: data.user.email_verified_at || null
 			};
 			auth.isAuthenticated = true;
 			auth.loading = false;
