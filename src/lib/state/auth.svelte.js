@@ -107,6 +107,7 @@ export async function register(userData) {
  * @returns {Promise<boolean>} - Success status
  */
 export async function logout() {
+	console.log('🔓 Logout function called');
 	auth.loading = true;
 	auth.error = null;
 
@@ -114,27 +115,34 @@ export async function logout() {
 		// Import auth API functions dynamically to avoid circular dependencies
 		const { logoutUser } = await import('$lib/api/auth.js');
 
+		console.log('📡 Calling logout API...');
 		const result = await logoutUser();
+		console.log('📡 Logout API response:', result);
 
 		// Always clear local state regardless of API response
+		console.log('🧹 Clearing local auth state...');
 		auth.user = null;
 		auth.isAuthenticated = false;
 
 		if (result.success) {
+			window.location.href = '/';
+			console.log('✅ Logout successful');
 			return true;
 		} else {
-			console.warn('Logout API failed, but local state cleared:', result.message);
+			console.warn('⚠️ Logout API failed, but local state cleared:', result.message);
 			return true; // Still return true since local state is cleared
 		}
 	} catch (error) {
-		console.error('Logout error:', error);
+		console.error('💥 Logout error:', error);
 		// Even if logout request fails, clear local state
+		console.log('🧹 Force clearing local state after error...');
 		auth.user = null;
 		auth.isAuthenticated = false;
 		auth.error = null; // Don't show error for logout
 		return true;
 	} finally {
 		auth.loading = false;
+		console.log('🔓 Logout function completed');
 	}
 }
 

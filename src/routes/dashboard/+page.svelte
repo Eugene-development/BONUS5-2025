@@ -1,6 +1,6 @@
 <script>
 	import { auth, logout } from '$lib/state/auth.svelte.js';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	/** @type {import('./$types').PageProps} */
@@ -26,9 +26,26 @@
 
 	// Handle logout with redirect
 	async function handleLogout() {
-		const success = await logout();
-		if (success) {
-			goto('/');
+		console.log('🚪 Starting logout process...');
+
+		try {
+			const success = await logout();
+			console.log('🔑 Logout result:', success);
+
+			if (success) {
+				console.log('🔄 Clearing client state and redirecting...');
+				// Принудительно перенаправляем на главную страницу
+				// Используем window.location для полной перезагрузки
+				window.location.href = '/';
+			} else {
+				console.error('❌ Logout failed, but still redirecting...');
+				// Принудительный переход даже при ошибке API
+				window.location.href = '/';
+			}
+		} catch (error) {
+			console.error('💥 Logout error:', error);
+			// Принудительный переход даже при ошибке
+			window.location.href = '/';
 		}
 	}
 </script>

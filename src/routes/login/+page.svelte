@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 
 	// Get redirectTo parameter from URL
-	let redirectTo = $derived(page.url.searchParams.get('redirectTo') || '/');
+	let redirectTo = $derived(page.url.searchParams.get('redirectTo') || '/dashboard');
 
 	// Form state using Svelte 5 runes
 	let formData = $state({
