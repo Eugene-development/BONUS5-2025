@@ -2,11 +2,14 @@
 	import { auth, sendEmailVerification, resendEmailVerification } from '$lib/state/auth.svelte.js';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	let cooldownTime = $state(0);
 	let isResending = $state(false);
 	let verificationProgress = $state(0);
 	let showSuccess = $state(false);
+	let showError = $state(false);
+	let errorMessage = $state('');
 
 	// Redirect if already verified
 	$effect(() => {
@@ -67,6 +70,18 @@
 	onMount(() => {
 		startCooldown();
 
+		// Check for error messages from URL
+		const urlParams = new URLSearchParams($page.url.search);
+		const error = urlParams.get('error');
+
+		if (error === 'invalid_link') {
+			showError = true;
+			errorMessage = 'Недействительная ссылка для подтверждения. Попробуйте переотправить письмо.';
+		} else if (error === 'verification_failed') {
+			showError = true;
+			errorMessage = 'Произошла ошибка при подтверждении email. Попробуйте еще раз.';
+		}
+
 		// Simulate verification progress
 		const progressTimer = setInterval(() => {
 			if (verificationProgress < 100) {
@@ -100,6 +115,36 @@
 						Новое письмо с подтверждением отправлено на вашу почту
 					</p>
 				</div>
+			</div>
+		</div>
+	</div>
+{/if}
+
+<!-- Error Notification -->
+{#if showError}
+	<div class="notification-container fixed right-4 top-4 z-50">
+		<div
+			class="notification glass-card slide-in min-w-80 transform border border-red-500/30 bg-red-500/20 p-4 transition-all duration-300"
+		>
+			<div class="flex items-start space-x-3">
+				<div class="flex-shrink-0">
+					<div class="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/20">
+						<span class="text-lg">⚠️</span>
+					</div>
+				</div>
+				<div class="min-w-0 flex-1">
+					<h4 class="text-sm font-medium leading-tight text-white">Ошибка подтверждения</h4>
+					<p class="mt-1 text-sm leading-relaxed text-red-300">
+						{errorMessage}
+					</p>
+				</div>
+				<button class="ml-2 text-red-400 hover:text-red-300" onclick={() => (showError = false)}>
+					<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+						<path
+							d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+						/>
+					</svg>
+				</button>
 			</div>
 		</div>
 	</div>

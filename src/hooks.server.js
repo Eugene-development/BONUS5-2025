@@ -16,28 +16,36 @@ export async function handle({ event, resolve }) {
 	// Если пользователь аутентифицирован, получаем его данные
 	if (laravelSession) {
 		try {
-			const response = await fetch(`${API_CONFIG.baseUrl}/api/user`, {
+			console.log('🔄 Fetching user data from Laravel API...');
+			const response = await fetch('http://localhost:8000/api/user', {
 				method: 'GET',
 				headers: {
 					Accept: 'application/json',
 					Cookie: `laravel_session=${laravelSession}${xsrfToken ? `; XSRF-TOKEN=${xsrfToken}` : ''}`,
 					'X-XSRF-TOKEN': xsrfToken ? decodeURIComponent(xsrfToken) : '',
-					Referer: API_CONFIG.baseUrl,
-					Origin: API_CONFIG.baseUrl
+					Referer: 'http://localhost:5173',
+					Origin: 'http://localhost:5173'
 				}
+			});
+
+			console.log('📡 Laravel user API response:', {
+				status: response.status,
+				ok: response.ok
 			});
 
 			if (response.ok) {
 				const userData = await response.json();
+				console.log('👤 User data from Laravel:', userData);
 				event.locals.user = userData.user || userData;
 				event.locals.isAuthenticated = true;
 			} else {
+				console.log('❌ Laravel user API failed:', response.status);
 				// Если получение пользователя не удалось, считаем неаутентифицированным
 				event.locals.isAuthenticated = false;
 				event.locals.user = null;
 			}
 		} catch (error) {
-			console.error('Error fetching user data in hooks:', error);
+			console.error('💥 Error fetching user data in hooks:', error);
 			event.locals.isAuthenticated = false;
 			event.locals.user = null;
 		}
@@ -46,11 +54,16 @@ export async function handle({ event, resolve }) {
 	// Добавляем дополнительную информацию для отладки
 	console.log('🔍 Auth check:', {
 		path: event.url.pathname,
-		laravelSession: !!laravelSession,
+		laravelSession: laravelSession ? laravelSession.substring(0, 20) + '...' : null,
 		xsrfToken: !!xsrfToken,
 		isAuthenticated: event.locals.isAuthenticated,
 		userEmail: event.locals.user?.email,
-		emailVerified: event.locals.user?.email_verified
+		emailVerified: event.locals.user?.email_verified,
+		allCookies: Object.keys(
+			Object.fromEntries(
+				event.cookies.getAll().map((c) => [c.name, c.value.substring(0, 10) + '...'])
+			)
+		)
 	});
 
 	return resolve(event);

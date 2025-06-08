@@ -48,8 +48,12 @@ export async function login(email, password, remember = false) {
 		const { loginUser } = await import('$lib/api/auth.js');
 
 		const result = await loginUser(email, password, remember);
+		console.log('🔐 Login API result:', result);
 
 		if (result.success) {
+			console.log('✅ Login successful, setting auth state');
+			console.log('👤 User data from API:', result.user);
+
 			auth.user = {
 				id: result.user.id || 1,
 				name: result.user.name || result.user.email,
@@ -59,8 +63,16 @@ export async function login(email, password, remember = false) {
 			};
 			auth.isAuthenticated = true;
 			auth.emailVerified = result.user.email_verified || false;
+
+			console.log('🔄 Auth state after setting:', {
+				isAuthenticated: auth.isAuthenticated,
+				emailVerified: auth.emailVerified,
+				user: auth.user
+			});
+
 			return true;
 		} else {
+			console.log('❌ Login failed:', result);
 			auth.error = result.message || 'Ошибка авторизации';
 			return false;
 		}

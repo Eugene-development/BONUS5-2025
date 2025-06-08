@@ -65,32 +65,60 @@ export async function POST({ request, cookies, fetch }) {
 		});
 
 		const data = await response.json();
+		console.log('🎯 Laravel login response:', {
+			status: response.status,
+			success: data.success !== false,
+			data
+		});
+
+		if (!response.ok) {
+			console.log('❌ Laravel login failed:', data);
+			return json(data, { status: response.status });
+		}
 
 		// Extract and set cookies from Laravel response
 		const setCookieHeaders = response.headers.getSetCookie();
+		console.log('🍪 Setting cookies from Laravel:', setCookieHeaders);
+
 		setCookieHeaders.forEach((cookieString) => {
 			const [cookiePart, ...attributeParts] = cookieString.split(';');
-			const [name, value] = cookiePart.split('=');
+			const [name, value] = cookiePart.trim().split('=');
+
+			if (!name || !value) return;
 
 			// Parse cookie attributes
 			/** @type {any} */
-			const attributes = {};
+			const attributes = {
+				path: '/',
+				httpOnly: false,
+				secure: false,
+				sameSite: 'lax'
+			};
+
 			attributeParts.forEach((attr) => {
-				const [key, val] = attr.trim().split('=');
-				if (key.toLowerCase() === 'path') attributes.path = val || '/';
-				if (key.toLowerCase() === 'domain') attributes.domain = val;
-				if (key.toLowerCase() === 'httponly') attributes.httpOnly = true;
-				if (key.toLowerCase() === 'secure') attributes.secure = true;
-				if (key.toLowerCase() === 'samesite') attributes.sameSite = val;
+				const trimmedAttr = attr.trim();
+				if (trimmedAttr.toLowerCase() === 'httponly') attributes.httpOnly = true;
+				if (trimmedAttr.toLowerCase() === 'secure') attributes.secure = true;
+				if (trimmedAttr.toLowerCase().startsWith('path=')) {
+					attributes.path = trimmedAttr.split('=')[1] || '/';
+				}
+				if (trimmedAttr.toLowerCase().startsWith('samesite=')) {
+					attributes.sameSite = trimmedAttr.split('=')[1] || 'lax';
+				}
+			});
+
+			// Ensure session cookies are properly set
+			if (name.includes('session') || name === 'laravel_session') {
+				attributes.httpOnly = true;
+			}
+
+			console.log(`🍪 Setting cookie ${name}:`, {
+				value: value.substring(0, 20) + '...',
+				attributes
 			});
 
 			// Set cookie in SvelteKit
-			cookies.set(name, value, {
-				path: attributes.path || '/',
-				httpOnly: attributes.httpOnly || false,
-				secure: attributes.secure || false,
-				sameSite: attributes.sameSite || 'lax'
-			});
+			cookies.set(name, value, attributes);
 		});
 
 		return json(data, { status: response.status });

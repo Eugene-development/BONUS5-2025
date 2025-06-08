@@ -24,6 +24,18 @@
 	// Loading state
 	let isLoading = $state(false);
 
+	// Redirect if already authenticated
+	$effect(() => {
+		if (auth.isAuthenticated) {
+			console.log('👤 User already authenticated, redirecting to dashboard');
+			if (!auth.emailVerified) {
+				goto('/email-verify');
+			} else {
+				goto('/dashboard');
+			}
+		}
+	});
+
 	/**
 	 * Handle form submission
 	 * @param {SubmitEvent} event
@@ -57,12 +69,28 @@
 			const success = await login(formData.email, formData.password, formData.rememberMe);
 
 			if (success) {
-				console.log('✅ Login successful, invalidating all data...');
+				console.log('✅ Login successful');
+				console.log('🔄 Auth state after login:', {
+					isAuthenticated: auth.isAuthenticated,
+					emailVerified: auth.emailVerified,
+					user: auth.user
+				});
+
+				// Wait a bit for cookies to be set
+				await new Promise((resolve) => setTimeout(resolve, 100));
+
 				// Принудительно обновляем все серверные данные
+				console.log('🔄 Invalidating all server data...');
 				await invalidateAll();
 
-				console.log('🔄 Redirecting to:', redirectTo);
-				// Redirect to the original destination or dashboard
+				// Check if email verification is required after state update
+				if (!auth.emailVerified) {
+					console.log('📧 Email not verified, redirecting to email-verify');
+					goto('/email-verify');
+					return;
+				}
+
+				console.log('🎯 Redirecting to dashboard...');
 				goto(redirectTo);
 			} else {
 				console.log('❌ Login failed:', auth.error);

@@ -2,6 +2,7 @@
 	import { auth, logout } from '$lib/state/auth.svelte.js';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	/** @type {import('./$types').PageProps} */
 	let { data } = $props();
@@ -9,6 +10,10 @@
 	// Объединяем серверные данные с клиентским состоянием
 	let currentUser = $derived(auth.user || data.user);
 	let isAuthenticated = $derived(auth.isAuthenticated || data.isAuthenticated);
+
+	// Email verification success message
+	let showSuccessMessage = $state(false);
+	let successMessage = $state('');
 
 	// Синхронизируем серверные данные с клиентским состоянием при загрузке
 	onMount(() => {
@@ -23,6 +28,29 @@
 			};
 			auth.isAuthenticated = true;
 			auth.loading = false;
+		}
+
+		// Check for verification success message
+		const urlParams = new URLSearchParams($page.url.search);
+		const message = urlParams.get('message');
+
+		if (message === 'email_verified') {
+			showSuccessMessage = true;
+			successMessage =
+				'Email успешно подтвержден! Теперь вы можете пользоваться всеми функциями сервиса.';
+			// Auto-hide after 5 seconds
+			setTimeout(() => {
+				showSuccessMessage = false;
+				// Clear URL params
+				window.history.replaceState({}, '', '/dashboard');
+			}, 5000);
+		} else if (message === 'email_already_verified') {
+			showSuccessMessage = true;
+			successMessage = 'Email уже был подтвержден ранее.';
+			setTimeout(() => {
+				showSuccessMessage = false;
+				window.history.replaceState({}, '', '/dashboard');
+			}, 3000);
 		}
 	});
 
@@ -53,6 +81,32 @@
 </script>
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
+	<!-- Success Message -->
+	{#if showSuccessMessage}
+		<div class="fixed left-1/2 top-4 z-50 w-full max-w-md -translate-x-1/2 transform px-4">
+			<div
+				class="rounded-lg border border-green-500/30 bg-green-500/20 p-4 shadow-lg backdrop-blur-sm"
+			>
+				<div class="flex items-center">
+					<svg
+						class="mr-3 h-6 w-6 text-green-400"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					<p class="text-sm font-medium text-green-300">{successMessage}</p>
+				</div>
+			</div>
+		</div>
+	{/if}
+
 	<div class="mx-auto max-w-4xl px-6 lg:px-8">
 		<!-- Page Header -->
 		<div class="mx-auto mb-16 text-center">
