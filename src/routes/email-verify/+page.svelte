@@ -167,7 +167,11 @@
 						{errorMessage}
 					</p>
 				</div>
-				<button class="ml-2 text-red-400 hover:text-red-300" onclick={() => (showError = false)}>
+				<button
+					class="ml-2 text-red-400 hover:text-red-300"
+					onclick={() => (showError = false)}
+					aria-label="Закрыть уведомление"
+				>
 					<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
 						<path
 							d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -279,9 +283,9 @@
 		<div class="mt-8 text-center">
 			<p class="mb-4 text-sm text-gray-400">Не получили письмо?</p>
 			<div class="space-y-2 text-sm">
-				<a href="#" class="block text-blue-400 transition-colors hover:text-blue-300">
+				<p class="block text-blue-400 transition-colors hover:text-blue-300">
 					📥 Проверить папку "Спам"
-				</a>
+				</p>
 				<a href="/dashboard" class="block text-blue-400 transition-colors hover:text-blue-300">
 					🏠 Вернуться в личный кабинет
 				</a>

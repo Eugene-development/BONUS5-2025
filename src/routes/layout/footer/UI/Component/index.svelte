@@ -10,7 +10,7 @@
 			</p>
 		</div>
 		<div>
-			<p class="text-sm font-semibold text-gray-400 hover:text-white">privacy@bonus5.ru</p>
+			<p class="text-sm font-semibold text-gray-400 hover:text-white">support@bonus5.ru</p>
 		</div>
 	</div>
 </div>

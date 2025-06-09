@@ -161,7 +161,7 @@
 					</svg>
 					<h3 class="text-xl font-semibold text-white">Профиль</h3>
 				</div>
-				<p class="mb-4 text-gray-300">Управление личными данными</p>
+				<p class="mb-4 text-gray-300">Управление данными</p>
 				<button class="font-medium text-indigo-400 hover:text-indigo-300"> Редактировать → </button>
 			</div>
 
