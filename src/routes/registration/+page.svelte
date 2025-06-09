@@ -199,7 +199,7 @@
 								id="first-name"
 								autocomplete="given-name"
 								bind:value={formData.firstName}
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.firstName
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.firstName
 									? 'outline-red-500'
 									: ''}"
 							/>
@@ -217,7 +217,7 @@
 								id="city"
 								autocomplete="address-level2"
 								bind:value={formData.city}
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.city
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.city
 									? 'outline-red-500'
 									: ''}"
 							/>
@@ -235,7 +235,7 @@
 								id="email"
 								autocomplete="email"
 								bind:value={formData.email}
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.email
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.email
 									? 'outline-red-500'
 									: ''}"
 							/>
@@ -253,7 +253,7 @@
 								id="password"
 								autocomplete="new-password"
 								bind:value={formData.password}
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.password
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.password
 									? 'outline-red-500'
 									: ''}"
 							/>
@@ -273,7 +273,7 @@
 								id="password-confirm"
 								autocomplete="new-password"
 								bind:value={formData.passwordConfirm}
-								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.passwordConfirm
+								class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 {errors.passwordConfirm
 									? 'outline-red-500'
 									: ''}"
 							/>
@@ -313,7 +313,7 @@
 					<button
 						type="submit"
 						disabled={auth.loading || !formData.termsAccepted}
-						class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 {formData.termsAccepted &&
+						class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 {formData.termsAccepted &&
 						!auth.loading
 							? 'bg-indigo-400 hover:bg-pink-400'
 							: 'cursor-not-allowed bg-gray-600'}"
