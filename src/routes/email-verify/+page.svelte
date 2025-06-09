@@ -80,14 +80,20 @@
 		const sessionCookie = getLaravelSession();
 		const csrfToken = getCsrfToken();
 
+		// Check for registration flag from URL
+		const urlParams = new URLSearchParams($page.url.search);
+		const fromRegistration = urlParams.get('from_registration') === 'true';
+
 		console.log('📄 Email-verify page loaded');
 		console.log('🔐 Auth state:', auth.isAuthenticated);
 		console.log('👤 User:', auth.user);
 		console.log('🍪 Laravel session:', sessionCookie);
 		console.log('🔑 CSRF token:', csrfToken);
+		console.log('📍 From registration:', fromRegistration);
 
 		// If not authenticated or no session cookie, redirect to login
-		if (!auth.isAuthenticated || !sessionCookie) {
+		// BUT: Skip this check if coming from registration (allow some time for cookies to settle)
+		if (!fromRegistration && (!auth.isAuthenticated || !sessionCookie)) {
 			console.warn('⚠️ No authentication or session found, redirecting to login');
 			showError = true;
 			errorMessage = 'Сессия истекла. Пожалуйста, войдите в систему заново.';
@@ -100,7 +106,6 @@
 		startCooldown();
 
 		// Check for error messages from URL
-		const urlParams = new URLSearchParams($page.url.search);
 		const error = urlParams.get('error');
 
 		if (error === 'invalid_link') {

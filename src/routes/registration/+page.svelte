@@ -28,6 +28,9 @@
 		general: ''
 	});
 
+	// Success notification state
+	let showSuccess = $state(false);
+
 	// Watch for form changes (server-side validation)
 	$effect(() => {
 		if (form?.error) {
@@ -59,10 +62,18 @@
 			};
 			auth.isAuthenticated = true;
 
-			// Small delay to ensure cookies are set
+			// Show success notification
+			showSuccess = true;
+
+			// Auto-hide notification after 3 seconds
 			setTimeout(() => {
-				goto('/email-verify');
-			}, 100);
+				showSuccess = false;
+			}, 3000);
+
+			// Small delay to ensure cookies are set, then redirect with registration flag
+			setTimeout(() => {
+				goto('/email-verify?from_registration=true');
+			}, 1500);
 		}
 	});
 
@@ -152,10 +163,18 @@
 					auth.isAuthenticated = true;
 					auth.error = null;
 
-					// Small delay to ensure cookies are set
+					// Show success notification
+					showSuccess = true;
+
+					// Auto-hide notification after 3 seconds
 					setTimeout(() => {
-						goto('/email-verify');
-					}, 100);
+						showSuccess = false;
+					}, 3000);
+
+					// Small delay to ensure cookies are set, then redirect with registration flag
+					setTimeout(() => {
+						goto('/email-verify?from_registration=true');
+					}, 1500);
 				} else if (result.type === 'failure') {
 					auth.error = result.data?.message || 'Ошибка регистрации';
 				}
@@ -168,6 +187,29 @@
 		};
 	};
 </script>
+
+<!-- Success Notification -->
+{#if showSuccess}
+	<div class="notification-container fixed right-4 top-4 z-50">
+		<div
+			class="notification glass-card slide-in min-w-80 transform p-4 transition-all duration-300"
+		>
+			<div class="flex items-start space-x-3">
+				<div class="flex-shrink-0">
+					<div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-500/20">
+						<span class="text-lg">✅</span>
+					</div>
+				</div>
+				<div class="min-w-0 flex-1">
+					<h4 class="text-sm font-medium leading-tight text-white">Регистрация прошла успешно</h4>
+					<p class="mt-1 text-sm leading-relaxed text-gray-300">
+						Подтвердите вашу почту для завершения регистрации
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -334,3 +376,35 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.glass-card {
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(12px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 12px;
+	}
+
+	.slide-in {
+		animation: slideInFromRight 0.3s ease-out;
+	}
+
+	@keyframes slideInFromRight {
+		from {
+			opacity: 0;
+			transform: translateX(100%);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	.notification-container {
+		pointer-events: none;
+	}
+
+	.notification {
+		pointer-events: auto;
+	}
+</style>
