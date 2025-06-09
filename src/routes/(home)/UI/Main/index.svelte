@@ -5,13 +5,13 @@
 
 <div class="relative isolate bg-gray-900">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-		<div class="relative mt-2 px-6 pt-16 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
+		<div class="relative mt-2 px-6 pb-20 pt-16 sm:pt-32 lg:static lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
 				<div
 					class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2"
 				>
 					<svg
-						class="absolute inset-0 size-full [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-700"
+						class="absolute inset-0 size-full stroke-gray-700 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
 						aria-hidden="true"
 					>
 						<defs>
@@ -37,7 +37,7 @@
 						/>
 					</svg>
 					<div
-						class="absolute top-[calc(100%-13rem)] -left-56 transform-gpu blur-3xl lg:top-[calc(50%-7rem)] lg:left-[max(-14rem,calc(100%-59rem))]"
+						class="absolute -left-56 top-[calc(100%-13rem)] transform-gpu blur-3xl lg:left-[max(-14rem,calc(100%-59rem))] lg:top-[calc(50%-7rem)]"
 						aria-hidden="true"
 					>
 						<div
@@ -46,22 +46,22 @@
 						></div>
 					</div>
 				</div>
-				<h2 class="text-4xl font-semibold tracking-widest text-pretty text-white sm:text-6xl">
+				<h2 class="text-pretty text-4xl font-semibold tracking-widest text-white sm:text-6xl">
 					BONUS 5
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
 					Зарегистрируйтесь и отправьте контакты потенциального клиента нашим партнёрам<sup>*</sup> и
 					получите бонус 5%.
 				</p>
-				<p class="mt-6 text-lg/8 text-gray-300">
+				<p class="mt-2 text-lg/8 text-gray-300">
 					Или станьте зарегистрированным пользователем и получите 5% кэшбэк, если приобретаете для
-					самого себя.
+					себя.
 				</p>
 				<dl class="mt-10 space-y-4 text-base/7 text-gray-300">
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-gray-400"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -77,30 +77,8 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong>Надёжно.</strong> Мы работаем с лучшими компаниями поставщиками товаров и услуг.
-						</dd>
-					</div>
-					<div class="flex gap-x-4">
-						<dt class="flex-none">
-							<svg
-								class="h-7 w-6 text-gray-400"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-								data-slot="icon"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-						</dt>
-						<dd>
-							<strong>Конфиденциально.</strong>
-							Мы не будем никому раскрывать ваши личные регистрационные данные.
+							<strong class="text-green-500">Честно.</strong>
+							Гарантировано выплатим бонус в полном объёме в течении 5 рабочих дней после закрытия сделки.
 						</dd>
 					</div>
 
@@ -108,7 +86,7 @@
 						<dt class="flex-none">
 							<span class="sr-only">Address</span>
 							<svg
-								class="h-7 w-6 text-gray-400"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -124,14 +102,38 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong>Выгодно.</strong>
+							<strong class="text-green-500">Выгодно.</strong>
 							Хороший дополнительный заработок и экономия на покупках для вас или ваших знакомых.
+						</dd>
+					</div>
+
+					<div class="flex gap-x-4">
+						<dt class="flex-none">
+							<svg
+								class="h-7 w-6 text-green-400"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+						</dt>
+						<dd>
+							<strong class="text-green-500">Надёжно.</strong> Мы работаем с лучшими компаниями поставщиками
+							товаров и услуг.
 						</dd>
 					</div>
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-gray-400"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -147,8 +149,8 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong>Честно.</strong>
-							Гарантировано выплатим бонус в полном объёме в течении 10 рабочих дней после закрытия сделки.
+							<strong class="text-green-500">Секретно.</strong>
+							Мы не будем никому раскрывать ваши личные регистрационные данные.
 						</dd>
 					</div>
 				</dl>
