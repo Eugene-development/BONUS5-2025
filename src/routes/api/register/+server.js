@@ -40,7 +40,7 @@ export async function POST({ request, cookies }) {
 			if (name && value) {
 				cookies.set(name, value, {
 					path: '/',
-					httpOnly: name === 'laravel_session',
+					httpOnly: false, // Allow JavaScript access for SPA authentication
 					secure: false, // Set to true in production with HTTPS
 					sameSite: 'lax'
 				});

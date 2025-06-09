@@ -40,7 +40,7 @@ export async function POST({ request, cookies, fetch }) {
 				sessionCookie = `${name}=${value}`;
 				cookies.set(name, value, {
 					path: '/',
-					httpOnly: true,
+					httpOnly: false, // Allow JavaScript access for SPA
 					secure: false,
 					sameSite: 'lax'
 				});
@@ -107,9 +107,9 @@ export async function POST({ request, cookies, fetch }) {
 				}
 			});
 
-			// Ensure session cookies are properly set
+			// Ensure session cookies are accessible for SPA authentication
 			if (name.includes('session') || name === 'laravel_session') {
-				attributes.httpOnly = true;
+				attributes.httpOnly = false; // Allow JavaScript access for SPA
 			}
 
 			console.log(`🍪 Setting cookie ${name}:`, {

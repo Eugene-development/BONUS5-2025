@@ -72,6 +72,23 @@ export function getCookie(name) {
 }
 
 /**
+ * Get Laravel session cookie
+ * @returns {string|null} Laravel session cookie value
+ */
+export function getLaravelSession() {
+	if (typeof document === 'undefined') return null;
+
+	const cookies = document.cookie.split(';');
+	for (let cookie of cookies) {
+		const [cookieName, cookieValue] = cookie.trim().split('=');
+		if (cookieName === 'laravel_session') {
+			return decodeURIComponent(cookieValue);
+		}
+	}
+	return null;
+}
+
+/**
  * Prepare headers for API request with CSRF token
  * @param {Object} additionalHeaders - Additional headers to include
  * @returns {Object} Headers object with CSRF token

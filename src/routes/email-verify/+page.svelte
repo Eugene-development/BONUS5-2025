@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { getLaravelSession, getCsrfToken } from '$lib/config/api.js';
 
 	let cooldownTime = $state(0);
 	let isResending = $state(false);
@@ -33,14 +34,21 @@
 	async function handleResendEmail() {
 		if (cooldownTime > 0 || isResending) return;
 
+		console.log('📧 Starting resend email process...');
 		isResending = true;
 		const success = await resendEmailVerification();
 
 		if (success) {
+			console.log('✅ Resend email successful');
 			startCooldown();
 			// Show success notification
 			showSuccess = true;
 			setTimeout(() => (showSuccess = false), 3000);
+		} else {
+			console.error('❌ Resend email failed');
+			showError = true;
+			errorMessage = 'Не удалось переотправить письмо. Попробуйте еще раз.';
+			setTimeout(() => (showError = false), 3000);
 		}
 
 		isResending = false;
@@ -68,6 +76,27 @@
 
 	// Start initial cooldown
 	onMount(() => {
+		// Check authentication and cookies
+		const sessionCookie = getLaravelSession();
+		const csrfToken = getCsrfToken();
+
+		console.log('📄 Email-verify page loaded');
+		console.log('🔐 Auth state:', auth.isAuthenticated);
+		console.log('👤 User:', auth.user);
+		console.log('🍪 Laravel session:', sessionCookie);
+		console.log('🔑 CSRF token:', csrfToken);
+
+		// If not authenticated or no session cookie, redirect to login
+		if (!auth.isAuthenticated || !sessionCookie) {
+			console.warn('⚠️ No authentication or session found, redirecting to login');
+			showError = true;
+			errorMessage = 'Сессия истекла. Пожалуйста, войдите в систему заново.';
+			setTimeout(() => {
+				goto('/login');
+			}, 3000);
+			return;
+		}
+
 		startCooldown();
 
 		// Check for error messages from URL
@@ -223,12 +252,12 @@
 
 		<!-- Action Buttons -->
 		<div class="space-y-4">
-			<button
+			<!-- <button
 				class="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
 				onclick={openEmailClient}
 			>
 				Открыть почтовый клиент
-			</button>
+			</button> -->
 
 			<button
 				class="w-full rounded-lg bg-white/10 px-4 py-3 font-medium text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-50"

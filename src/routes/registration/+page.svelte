@@ -53,10 +53,16 @@
 			auth.user = {
 				id: 1, // Add required id property
 				name: String(form.user.name),
-				email: String(form.user.email)
+				email: String(form.user.email),
+				email_verified: false,
+				email_verified_at: null
 			};
 			auth.isAuthenticated = true;
-			goto('/');
+
+			// Small delay to ensure cookies are set
+			setTimeout(() => {
+				goto('/email-verify');
+			}, 100);
 		}
 	});
 
@@ -139,13 +145,17 @@
 					auth.user = {
 						id: 1, // Add required id property
 						name: String(result.data.user.name),
-						email: String(result.data.user.email)
+						email: String(result.data.user.email),
+						email_verified: false,
+						email_verified_at: null
 					};
 					auth.isAuthenticated = true;
 					auth.error = null;
 
-					// Navigate to home page
-					goto('/');
+					// Small delay to ensure cookies are set
+					setTimeout(() => {
+						goto('/email-verify');
+					}, 100);
 				} else if (result.type === 'failure') {
 					auth.error = result.data?.message || 'Ошибка регистрации';
 				}
@@ -162,7 +172,7 @@
 <div class="relative isolate bg-gray-900 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<div class="mx-auto text-center">
-			<h2 class="text-4xl font-normal tracking-widest text-pretty text-white sm:text-6xl">
+			<h2 class="text-pretty text-4xl font-normal tracking-widest text-white sm:text-6xl">
 				Регистрация
 			</h2>
 			<!-- <p class="mt-6 text-lg/8 text-gray-300">

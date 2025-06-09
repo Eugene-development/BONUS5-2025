@@ -3,7 +3,7 @@
  * Provides authentication-specific methods and error handling
  */
 
-import { API_CONFIG } from '$lib/config/api.js';
+import { API_CONFIG, getCsrfToken, getLaravelSession } from '$lib/config/api.js';
 import { post, get, ApiError } from '$lib/api/client.js';
 
 /**
@@ -186,21 +186,25 @@ export async function checkAuthentication() {
  */
 export async function sendEmailVerification() {
 	try {
-		const response = await post('/api/email/verification-notification');
+		console.log('📧 Sending email verification via SvelteKit API...');
+
+		// Use SvelteKit API route which handles cookies properly
+		const response = await post('/api/email/send');
 
 		return {
 			success: true,
+			// @ts-ignore
 			message: response.message || 'Письмо с подтверждением отправлено'
 		};
 	} catch (error) {
+		console.error('❌ Send email verification error:', error);
+
 		if (error instanceof ApiError) {
-			if (error.status === 422) {
-				return {
-					success: false,
-					// @ts-ignore
-					message: error.data?.message || 'Email уже подтвержден'
-				};
-			}
+			return {
+				success: false,
+				// @ts-ignore
+				message: error.data?.message || 'Ошибка при отправке письма'
+			};
 		}
 
 		return {
@@ -216,21 +220,25 @@ export async function sendEmailVerification() {
  */
 export async function resendEmailVerification() {
 	try {
-		const response = await post('/api/email/verify/resend');
+		console.log('📧 Resending email verification via SvelteKit API...');
+
+		// Use SvelteKit API route which handles cookies properly
+		const response = await post('/api/email/resend');
 
 		return {
 			success: true,
+			// @ts-ignore
 			message: response.message || 'Письмо с подтверждением отправлено повторно'
 		};
 	} catch (error) {
+		console.error('❌ Resend email verification error:', error);
+
 		if (error instanceof ApiError) {
-			if (error.status === 422) {
-				return {
-					success: false,
-					// @ts-ignore
-					message: error.data?.message || 'Email уже подтвержден'
-				};
-			}
+			return {
+				success: false,
+				// @ts-ignore
+				message: error.data?.message || 'Ошибка при повторной отправке письма'
+			};
 		}
 
 		return {
