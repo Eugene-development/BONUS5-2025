@@ -182,6 +182,12 @@ export async function checkAuth() {
 
 		const result = await getCurrentUser();
 
+		// Debug logging to see what we're receiving
+		console.log('🔍 checkAuth API result:', result);
+		console.log('🔍 User data from API:', result.user);
+		console.log('🔍 Email verified field from API:', result.user?.email_verified);
+		console.log('🔍 Email verified at field from API:', result.user?.email_verified_at);
+
 		if (result.success && result.user) {
 			auth.user = {
 				id: result.user.id || 1,
@@ -192,6 +198,16 @@ export async function checkAuth() {
 			};
 			auth.isAuthenticated = true;
 			auth.emailVerified = result.user.email_verified || false;
+
+			// Debug logging to see what we're setting
+			console.log('🔍 Set auth.emailVerified to:', auth.emailVerified);
+			console.log('🔍 Set auth.user.email_verified to:', auth.user.email_verified);
+			console.log('🔍 Final auth state:', {
+				isAuthenticated: auth.isAuthenticated,
+				emailVerified: auth.emailVerified,
+				user: auth.user
+			});
+
 			return true;
 		} else {
 			auth.user = null;
