@@ -221,7 +221,7 @@
 			</div>
 
 			<h1 class="verify-headline mb-4 text-3xl font-bold tracking-wide text-white">
-				Проверьте вашу почту
+				Подтвердите вашу почту
 			</h1>
 
 			<p class="verify-subheadline text-lg leading-relaxed text-gray-300">
