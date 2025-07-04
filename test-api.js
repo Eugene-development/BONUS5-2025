@@ -3,7 +3,7 @@
  * Run with: node test-api.js
  */
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'http://localhost:7010';
 
 /**
  * Test CSRF endpoint
@@ -144,7 +144,7 @@ async function testCors() {
 		const response = await fetch(`${API_BASE}/api/user`, {
 			method: 'OPTIONS',
 			headers: {
-				Origin: 'http://localhost:5173',
+				Origin: 'http://localhost:5010',
 				'Access-Control-Request-Method': 'POST',
 				'Access-Control-Request-Headers': 'Content-Type'
 			}
@@ -159,7 +159,7 @@ async function testCors() {
 
 		console.log('📋 CORS Headers:', corsHeaders);
 
-		if (corsHeaders['Access-Control-Allow-Origin'] === 'http://localhost:5173') {
+		if (corsHeaders['Access-Control-Allow-Origin'] === 'http://localhost:5010') {
 			console.log('✅ CORS configured correctly for SvelteKit');
 		} else {
 			console.log('❌ CORS may not be configured correctly');
@@ -185,9 +185,10 @@ async function runTests() {
 	console.log('\n' + '='.repeat(50));
 	console.log('✨ Tests completed!');
 	console.log('\n📋 Next steps:');
-	console.log('1. Start SvelteKit dev server: npm run dev');
-	console.log('2. Test registration form at http://localhost:5173/registration');
-	console.log('3. Test login form at http://localhost:5173/login');
+	console.log('1. Start backend: ./start-backend.sh');
+	console.log('2. Start frontend: ./start-frontend.sh');
+	console.log('3. Test registration form at http://localhost:5010/registration');
+	console.log('4. Test API directly at http://localhost:7010/api');
 }
 
 // Run tests if this file is executed directly

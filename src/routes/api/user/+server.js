@@ -4,13 +4,13 @@ import { json } from '@sveltejs/kit';
 export async function GET({ cookies, fetch }) {
 	try {
 		// Forward request to Laravel API
-		const response = await fetch('http://localhost:8000/api/user', {
+		const response = await fetch('http://localhost:7010/api/user', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'X-Requested-With': 'XMLHttpRequest',
-				Referer: 'http://localhost:5173',
-				Origin: 'http://localhost:5173',
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010',
 				// Forward existing cookies
 				Cookie: cookies
 					.getAll()

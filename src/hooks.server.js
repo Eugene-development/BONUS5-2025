@@ -4,11 +4,11 @@ import { API_CONFIG } from '$lib/config/api.js';
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
 	// Проверяем наличие необходимых cookies от Laravel Sanctum
-	const laravelSession = event.cookies.get('laravel_session');
+	const laravelSession = event.cookies.get('bonus5_development_session');
 	const xsrfToken = event.cookies.get('XSRF-TOKEN');
 
 	// Пользователь считается аутентифицированным если есть обе cookie
-	// Более мягкая проверка - достаточно laravel_session
+	// Более мягкая проверка - достаточно bonus5_development_session
 	event.locals.isAuthenticated = !!laravelSession;
 	event.locals.authToken = laravelSession;
 	event.locals.user = null;
@@ -17,14 +17,14 @@ export async function handle({ event, resolve }) {
 	if (laravelSession) {
 		try {
 			console.log('🔄 Fetching user data from Laravel API...');
-			const response = await fetch('http://localhost:8000/api/user', {
+			const response = await fetch('http://localhost:7010/api/user', {
 				method: 'GET',
 				headers: {
 					Accept: 'application/json',
-					Cookie: `laravel_session=${laravelSession}${xsrfToken ? `; XSRF-TOKEN=${xsrfToken}` : ''}`,
+					Cookie: `bonus5_development_session=${laravelSession}${xsrfToken ? `; XSRF-TOKEN=${xsrfToken}` : ''}`,
 					'X-XSRF-TOKEN': xsrfToken ? decodeURIComponent(xsrfToken) : '',
-					Referer: 'http://localhost:5173',
-					Origin: 'http://localhost:5173'
+					Referer: 'http://localhost:5010',
+					Origin: 'http://localhost:5010'
 				}
 			});
 

@@ -35,14 +35,14 @@ export async function POST({ request, cookies }) {
 		}
 
 		// Forward request to Laravel API with proper cookies
-		const response = await fetch('http://localhost:8000/api/email/verify/resend', {
+		const response = await fetch('http://localhost:7010/api/email/verify/resend', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				'X-XSRF-TOKEN': decodeURIComponent(xsrfToken),
-				Referer: 'http://localhost:5173',
-				Origin: 'http://localhost:5173',
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010',
 				Cookie: `laravel_session=${laravelSession}; XSRF-TOKEN=${xsrfToken}`
 			},
 			credentials: 'include'

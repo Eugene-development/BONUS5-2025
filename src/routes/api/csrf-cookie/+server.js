@@ -3,13 +3,13 @@ import { json } from '@sveltejs/kit';
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ cookies, fetch }) {
 	try {
-		// Получаем CSRF токен от Laravel Sanctum
-		const response = await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+		// Получаем CSRF токен от Laravel Sanctum через внутренний URL
+		const response = await fetch('http://localhost:7010/sanctum/csrf-cookie', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
-				Referer: 'http://localhost:5173',
-				Origin: 'http://localhost:5173'
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010'
 			},
 			credentials: 'include'
 		});

@@ -108,7 +108,7 @@ export const actions = {
 				terms_accepted: termsAccepted
 			};
 
-			const response = await fetch('http://localhost:8000/api/register', {
+			const response = await fetch('http://localhost:7010/api/register', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

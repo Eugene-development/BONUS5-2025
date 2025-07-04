@@ -4,15 +4,15 @@ import { json } from '@sveltejs/kit';
 export async function POST({ cookies, fetch }) {
 	try {
 		// Forward request to Laravel API
-		const response = await fetch('http://localhost:8000/api/logout', {
+		const response = await fetch('http://localhost:7010/api/logout', {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 				'X-Requested-With': 'XMLHttpRequest',
 				'X-XSRF-TOKEN': cookies.get('XSRF-TOKEN') || '',
-				Referer: 'http://localhost:5173',
-				Origin: 'http://localhost:5173',
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010',
 				// Forward existing cookies
 				Cookie: cookies
 					.getAll()

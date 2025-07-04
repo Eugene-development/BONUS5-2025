@@ -11,14 +11,14 @@ export async function POST({ request, cookies }) {
 		const xsrfToken = cookies.get('XSRF-TOKEN');
 
 		// Forward request to Laravel API
-		const response = await fetch(`http://localhost:8000/api/register`, {
+		const response = await fetch(`http://localhost:7010/api/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				'X-XSRF-TOKEN': xsrfToken ? decodeURIComponent(xsrfToken) : '',
-				Referer: 'http://localhost:8000',
-				Origin: 'http://localhost:8000'
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010'
 			},
 			body: JSON.stringify(userData),
 			credentials: 'include'

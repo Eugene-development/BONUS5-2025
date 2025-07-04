@@ -23,6 +23,38 @@ export class ApiError extends Error {
 }
 
 /**
+ * Get CSRF token from cookies
+ * @returns {string|null} CSRF token value
+ */
+function getCsrfToken() {
+	if (typeof document === 'undefined') return null;
+	const cookies = document.cookie.split(';');
+	for (let cookie of cookies) {
+		const [name, value] = cookie.trim().split('=');
+		if (name === 'XSRF-TOKEN') {
+			return decodeURIComponent(value);
+		}
+	}
+	return null;
+}
+
+/**
+ * Ensure CSRF token is available
+ * @returns {Promise<void>}
+ */
+async function ensureCsrfToken() {
+	if (getCsrfToken()) {
+		return; // Token already exists
+	}
+
+	// Get CSRF token from Laravel Sanctum
+	await fetch(buildApiUrl('/sanctum/csrf-cookie'), {
+		method: 'GET',
+		credentials: 'include'
+	});
+}
+
+/**
  * Make API request to SvelteKit internal endpoints
  * @param {string} endpoint - API endpoint path
  * @param {any} options - Request options
@@ -32,8 +64,21 @@ export async function apiRequest(endpoint, options = {}) {
 	const { method = 'GET', body = null, headers = {} } = options;
 
 	try {
+		// Ensure CSRF token for state-changing requests
+		if (method !== 'GET' && method !== 'HEAD') {
+			await ensureCsrfToken();
+		}
+
 		// Prepare request headers
 		const requestHeaders = Object.assign({}, API_CONFIG.defaultHeaders, headers);
+
+		// Add CSRF token for state-changing requests
+		if (method !== 'GET' && method !== 'HEAD') {
+			const csrfToken = getCsrfToken();
+			if (csrfToken) {
+				requestHeaders['X-XSRF-TOKEN'] = csrfToken;
+			}
+		}
 
 		// Build request configuration
 		/** @type {RequestInit} */
