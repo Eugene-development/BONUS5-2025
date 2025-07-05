@@ -81,7 +81,7 @@ export function getLaravelSession() {
 	const cookies = document.cookie.split(';');
 	for (let cookie of cookies) {
 		const [cookieName, cookieValue] = cookie.trim().split('=');
-		if (cookieName === 'laravel_session') {
+		if (cookieName === 'bonus5_session') {
 			return decodeURIComponent(cookieValue);
 		}
 	}

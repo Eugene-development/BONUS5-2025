@@ -98,6 +98,55 @@ export const actions = {
 		}
 
 		try {
+			// First get CSRF token
+			const csrfResponse = await fetch('http://host.docker.internal:7010/sanctum/csrf-cookie', {
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					Referer: 'http://localhost:5010',
+					Origin: 'http://localhost:5010'
+				},
+				credentials: 'include'
+			});
+
+			// Extract CSRF token from response headers and set session cookies
+			let csrfToken = '';
+			const setCookieHeaders = csrfResponse.headers.getSetCookie();
+			setCookieHeaders.forEach((cookieString) => {
+				if (cookieString.includes('XSRF-TOKEN=')) {
+					const tokenMatch = cookieString.match(/XSRF-TOKEN=([^;]+)/);
+					if (tokenMatch) {
+						csrfToken = decodeURIComponent(tokenMatch[1]);
+					}
+				}
+
+				// Also set session cookie from CSRF request
+				if (cookieString.includes('bonus5_session=')) {
+					const [cookiePart] = cookieString.split(';');
+					const [name, value] = cookiePart.split('=');
+					if (name && value) {
+						cookies.set(name, value, {
+							path: '/',
+							httpOnly: true,
+							secure: false,
+							sameSite: 'lax'
+						});
+					}
+				}
+			});
+
+			console.log('🔐 Registration: Got CSRF token for registration');
+
+			// Set CSRF token in SvelteKit cookies for frontend access
+			if (csrfToken) {
+				cookies.set('XSRF-TOKEN', csrfToken, {
+					path: '/',
+					httpOnly: false,
+					secure: false,
+					sameSite: 'lax'
+				});
+			}
+
 			// Direct call to Laravel API (bypass client API to avoid serialization issues)
 			const userData = {
 				name: firstName, // Laravel expects 'name', not 'firstName'
@@ -108,28 +157,34 @@ export const actions = {
 				terms_accepted: termsAccepted
 			};
 
-			const response = await fetch('http://localhost:7010/api/register', {
+			const response = await fetch('http://host.docker.internal:7010/api/register', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Accept: 'application/json'
+					Accept: 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-XSRF-TOKEN': csrfToken,
+					Referer: 'http://localhost:5010',
+					Origin: 'http://localhost:5010'
 				},
-				body: JSON.stringify(userData)
+				body: JSON.stringify(userData),
+				credentials: 'include'
 			});
 
 			const result = await response.json();
 
 			if (response.ok) {
 				// Set Laravel session cookies
-				const setCookieHeaders = response.headers.getSetCookie();
-				setCookieHeaders.forEach((cookieString) => {
+				const responseSetCookieHeaders = response.headers.getSetCookie();
+				responseSetCookieHeaders.forEach((cookieString) => {
 					const [cookiePart] = cookieString.split(';');
 					const [name, value] = cookiePart.split('=');
 
 					if (name && value) {
+						console.log(`🍪 Registration: Setting cookie ${name}`);
 						cookies.set(name, value, {
 							path: '/',
-							httpOnly: name === 'laravel_session',
+							httpOnly: name === 'bonus5_session',
 							secure: false,
 							sameSite: 'lax'
 						});

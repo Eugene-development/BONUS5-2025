@@ -1,55 +1,92 @@
 import { json } from '@sveltejs/kit';
-import { API_CONFIG } from '$lib/config/api.js';
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request, cookies }) {
+export async function POST({ request, cookies, fetch }) {
 	try {
-		// Get request body
-		const userData = await request.json();
+		const requestData = await request.json();
 
-		// Get Laravel session cookie and CSRF token
-		const xsrfToken = cookies.get('XSRF-TOKEN');
-
-		// Forward request to Laravel API
-		const response = await fetch(`http://localhost:7010/api/register`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				'X-XSRF-TOKEN': xsrfToken ? decodeURIComponent(xsrfToken) : '',
-				Referer: 'http://localhost:5010',
-				Origin: 'http://localhost:5010'
-			},
-			body: JSON.stringify(userData),
-			credentials: 'include'
+		console.log('📝 Registration request received:', {
+			email: requestData.email,
+			firstName: requestData.firstName,
+			city: requestData.city
 		});
 
-		const data = await response.json();
+		// Forward request to Laravel API
+		const response = await fetch('http://host.docker.internal:7010/api/register', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest',
+				'X-XSRF-TOKEN': cookies.get('XSRF-TOKEN') || '',
+				Referer: 'http://localhost:5010',
+				Origin: 'http://localhost:5010',
+				// Forward existing cookies
+				Cookie: cookies
+					.getAll()
+					.map((cookie) => `${cookie.name}=${cookie.value}`)
+					.join('; ')
+			},
+			credentials: 'include',
+			body: JSON.stringify({
+				name: requestData.firstName, // Laravel expects 'name'
+				city: requestData.city,
+				email: requestData.email,
+				password: requestData.password,
+				password_confirmation: requestData.password_confirmation,
+				terms_accepted: requestData.terms_accepted
+			})
+		});
 
-		// Forward Laravel response including status code
-		if (!response.ok) {
-			return json(data, { status: response.status });
-		}
+		console.log('📡 Laravel registration response:', {
+			status: response.status,
+			ok: response.ok
+		});
 
-		// Set cookies from Laravel response
+		// Handle Laravel response cookies
 		const setCookieHeaders = response.headers.getSetCookie();
 		setCookieHeaders.forEach((cookieString) => {
+			console.log('🍪 Processing cookie:', cookieString.substring(0, 50) + '...');
+
+			// Parse cookie
 			const [cookiePart] = cookieString.split(';');
 			const [name, value] = cookiePart.split('=');
 
 			if (name && value) {
-				cookies.set(name, value, {
-					path: '/',
-					httpOnly: false, // Allow JavaScript access for SPA authentication
-					secure: false, // Set to true in production with HTTPS
-					sameSite: 'lax'
-				});
+				const isSessionCookie = name === 'bonus5_session';
+				const isXsrfToken = name === 'XSRF-TOKEN';
+
+				if (isSessionCookie || isXsrfToken) {
+					console.log(`🍪 Setting cookie ${name}:`, isSessionCookie ? 'session' : 'xsrf');
+
+					cookies.set(name, value, {
+						path: '/',
+						httpOnly: isSessionCookie,
+						secure: false,
+						sameSite: 'lax',
+						maxAge: isSessionCookie ? 7200 : undefined // 2 hours for session
+					});
+				}
 			}
 		});
 
-		return json(data);
+		const data = await response.json();
+
+		console.log('✅ Registration completed:', {
+			success: response.ok,
+			status: response.status
+		});
+
+		return json(data, { status: response.status });
 	} catch (error) {
-		console.error('Registration proxy error:', error);
-		return json({ message: 'Ошибка сервера при регистрации' }, { status: 500 });
+		console.error('💥 Registration proxy error:', error);
+		return json(
+			{
+				success: false,
+				message: 'Произошла ошибка при регистрации',
+				errors: {}
+			},
+			{ status: 500 }
+		);
 	}
 }

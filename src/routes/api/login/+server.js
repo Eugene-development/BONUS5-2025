@@ -6,7 +6,7 @@ export async function POST({ request, cookies, fetch }) {
 		const body = await request.json();
 
 		// Получаем CSRF токен от Laravel Sanctum
-		const csrfResponse = await fetch('http://localhost:7010/sanctum/csrf-cookie', {
+		const csrfResponse = await fetch('http://host.docker.internal:7010/sanctum/csrf-cookie', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
@@ -48,7 +48,7 @@ export async function POST({ request, cookies, fetch }) {
 		});
 
 		// Forward request to Laravel API с CSRF токеном
-		const response = await fetch('http://localhost:7010/api/login', {
+		const response = await fetch('http://host.docker.internal:7010/api/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

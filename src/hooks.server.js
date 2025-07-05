@@ -3,8 +3,13 @@ import { API_CONFIG } from '$lib/config/api.js';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
+	// Пропускаем API routes - они обрабатываются отдельно
+	if (event.url.pathname.startsWith('/api/')) {
+		return resolve(event);
+	}
+
 	// Проверяем наличие необходимых cookies от Laravel Sanctum
-	const laravelSession = event.cookies.get('bonus5_development_session');
+	const laravelSession = event.cookies.get('bonus5_session');
 	const xsrfToken = event.cookies.get('XSRF-TOKEN');
 
 	// Пользователь считается аутентифицированным если есть обе cookie
@@ -17,11 +22,11 @@ export async function handle({ event, resolve }) {
 	if (laravelSession) {
 		try {
 			console.log('🔄 Fetching user data from Laravel API...');
-			const response = await fetch('http://localhost:7010/api/user', {
+			const response = await fetch('http://host.docker.internal:7010/api/user', {
 				method: 'GET',
 				headers: {
 					Accept: 'application/json',
-					Cookie: `bonus5_development_session=${laravelSession}${xsrfToken ? `; XSRF-TOKEN=${xsrfToken}` : ''}`,
+					Cookie: `bonus5_session=${laravelSession}${xsrfToken ? `; XSRF-TOKEN=${xsrfToken}` : ''}`,
 					'X-XSRF-TOKEN': xsrfToken ? decodeURIComponent(xsrfToken) : '',
 					Referer: 'http://localhost:5010',
 					Origin: 'http://localhost:5010'

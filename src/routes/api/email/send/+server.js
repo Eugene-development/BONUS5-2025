@@ -35,7 +35,7 @@ export async function POST({ request, cookies }) {
 		}
 
 		// Forward request to Laravel API with proper cookies
-		const response = await fetch('http://localhost:7010/api/email/verification-notification', {
+		const response = await fetch('http://host.docker.internal:7010/api/email/verification-notification', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

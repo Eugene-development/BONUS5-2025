@@ -4,7 +4,7 @@ import { json } from '@sveltejs/kit';
 export async function GET({ cookies, fetch }) {
 	try {
 		// Получаем CSRF токен от Laravel Sanctum через внутренний URL
-		const response = await fetch('http://localhost:7010/sanctum/csrf-cookie', {
+		const response = await fetch('http://host.docker.internal:7010/sanctum/csrf-cookie', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',

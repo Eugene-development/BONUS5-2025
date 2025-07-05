@@ -1,5 +1,4 @@
 <script>
-	import { enhance } from '$app/forms';
 	import { register, auth } from '$lib/state/auth.svelte.js';
 	import { goto } from '$app/navigation';
 
@@ -78,10 +77,10 @@
 	});
 
 	/**
-	 * Form submission handler (sendFormPrice)
+	 * Form submission handler using API instead of form action
 	 * @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event
 	 */
-	function sendFormPrice(event) {
+	async function sendFormPrice(event) {
 		event.preventDefault();
 
 		// Reset errors
@@ -136,56 +135,47 @@
 			return false;
 		}
 
+		// Call registration API
+		try {
+			auth.loading = true;
+
+			console.log('📝 Starting registration...');
+
+			const result = await register({
+				firstName: formData.firstName,
+				city: formData.city,
+				email: formData.email,
+				password: formData.password,
+				password_confirmation: formData.passwordConfirm,
+				terms_accepted: formData.termsAccepted
+			});
+
+			if (result) {
+				console.log('✅ Registration successful');
+				showSuccess = true;
+
+				// Auto-hide notification after 3 seconds
+				setTimeout(() => {
+					showSuccess = false;
+				}, 3000);
+
+				// Redirect to email verification
+				setTimeout(() => {
+					goto('/email-verify?from_registration=true');
+				}, 1500);
+			} else {
+				console.log('❌ Registration failed');
+				errors.general = auth.error || 'Ошибка регистрации';
+			}
+		} catch (error) {
+			console.error('💥 Registration error:', error);
+			errors.general = 'Произошла ошибка при регистрации';
+		} finally {
+			auth.loading = false;
+		}
+
 		return true;
 	}
-
-	/**
-	 * Enhanced form submission handler
-	 */
-	const handleSubmit = () => {
-		// Update UI state before submitting
-		auth.loading = true;
-
-		/**
-		 * @param {{ result: import('@sveltejs/kit').ActionResult }} param0
-		 */
-		return async ({ result }) => {
-			try {
-				// Update authentication state based on result
-				if (result.type === 'success' && result.data?.success) {
-					auth.user = {
-						id: 1, // Add required id property
-						name: String(result.data.user.name),
-						email: String(result.data.user.email),
-						email_verified: false,
-						email_verified_at: null
-					};
-					auth.isAuthenticated = true;
-					auth.error = null;
-
-					// Show success notification
-					showSuccess = true;
-
-					// Auto-hide notification after 3 seconds
-					setTimeout(() => {
-						showSuccess = false;
-					}, 3000);
-
-					// Small delay to ensure cookies are set, then redirect with registration flag
-					setTimeout(() => {
-						goto('/email-verify?from_registration=true');
-					}, 1500);
-				} else if (result.type === 'failure') {
-					auth.error = result.data?.message || 'Ошибка регистрации';
-				}
-			} catch (error) {
-				console.error('Registration error:', error);
-				auth.error = 'Произошла ошибка при отправке формы';
-			} finally {
-				auth.loading = false;
-			}
-		};
-	};
 </script>
 
 <!-- Success Notification -->
@@ -229,7 +219,7 @@
 				</div>
 			{/if}
 
-			<form method="POST" onsubmit={sendFormPrice} use:enhance={handleSubmit} class="space-y-8">
+			<form onsubmit={sendFormPrice} class="space-y-8">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
 						<label for="first-name" class="block text-sm/6 font-semibold text-white">Ваше имя</label
