@@ -4,6 +4,7 @@
  */
 
 import { API_CONFIG, buildApiUrl } from '$lib/config/api.js';
+import { getBackendUrl } from '$lib/utils/backend.js';
 
 /**
  * API Error class for structured error handling
@@ -47,8 +48,9 @@ async function ensureCsrfToken() {
 		return; // Token already exists
 	}
 
-	// Get CSRF token from Laravel Sanctum
-	await fetch(buildApiUrl('/sanctum/csrf-cookie'), {
+	// Get CSRF token from Laravel Sanctum using environment-specific URL
+	const backendUrl = getBackendUrl();
+	await fetch(`${backendUrl}/sanctum/csrf-cookie`, {
 		method: 'GET',
 		credentials: 'include'
 	});

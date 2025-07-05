@@ -80,7 +80,7 @@
 	 * Form submission handler using API instead of form action
 	 * @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event
 	 */
-	async function sendFormPrice(event) {
+	async function handleRegistration(event) {
 		event.preventDefault();
 
 		// Reset errors
@@ -219,7 +219,7 @@
 				</div>
 			{/if}
 
-			<form onsubmit={sendFormPrice} class="space-y-8">
+			<form onsubmit={handleRegistration} class="space-y-8">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
 						<label for="first-name" class="block text-sm/6 font-semibold text-white">Ваше имя</label

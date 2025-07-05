@@ -1,17 +1,20 @@
 import { json } from '@sveltejs/kit';
+import { getBackendUrl, getFrontendUrl } from '$lib/utils/backend.js';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ cookies, fetch }) {
 	try {
-		// Forward request to Laravel API
-		const response = await fetch('http://host.docker.internal:7010/api/user', {
+		const backendUrl = getBackendUrl();
+		const frontendUrl = getFrontendUrl();
+
+		const response = await fetch(`${backendUrl}/api/user`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'X-Requested-With': 'XMLHttpRequest',
-				Referer: 'http://localhost:5010',
-				Origin: 'http://localhost:5010',
-				// Forward existing cookies
+				'X-XSRF-TOKEN': cookies.get('XSRF-TOKEN') || '',
+				Referer: frontendUrl,
+				Origin: frontendUrl,
 				Cookie: cookies
 					.getAll()
 					.map((cookie) => `${cookie.name}=${cookie.value}`)
@@ -20,19 +23,12 @@ export async function GET({ cookies, fetch }) {
 			credentials: 'include'
 		});
 
-		if (!response.ok) {
-			return json(
-				{ success: false, message: 'Ошибка аутентификации' },
-				{ status: response.status }
-			);
-		}
-
 		const data = await response.json();
-		return json(data);
+		return json(data, { status: response.status });
 	} catch (error) {
-		console.error('User proxy error:', error);
+		console.error('User API proxy error:', error);
 		return json(
-			{ success: false, message: 'Ошибка при получении данных пользователя' },
+			{ success: false, message: 'Ошибка получения данных пользователя' },
 			{ status: 500 }
 		);
 	}
