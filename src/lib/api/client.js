@@ -41,19 +41,14 @@ function getCsrfToken() {
 
 /**
  * Ensure CSRF token is available
+ * This is a no-op for client-side as CSRF tokens are handled by SvelteKit API endpoints
  * @returns {Promise<void>}
  */
 async function ensureCsrfToken() {
-	if (getCsrfToken()) {
-		return; // Token already exists
-	}
-
-	// Get CSRF token from Laravel Sanctum using environment-specific URL
-	const backendUrl = getBackendUrl();
-	await fetch(`${backendUrl}/sanctum/csrf-cookie`, {
-		method: 'GET',
-		credentials: 'include'
-	});
+	// In SvelteKit architecture, CSRF tokens are handled by server-side API endpoints
+	// Client-side code should not directly interact with Laravel backend
+	console.log('🔐 CSRF token handling delegated to SvelteKit API endpoints');
+	return;
 }
 
 /**
@@ -74,13 +69,8 @@ export async function apiRequest(endpoint, options = {}) {
 		// Prepare request headers
 		const requestHeaders = Object.assign({}, API_CONFIG.defaultHeaders, headers);
 
-		// Add CSRF token for state-changing requests
-		if (method !== 'GET' && method !== 'HEAD') {
-			const csrfToken = getCsrfToken();
-			if (csrfToken) {
-				requestHeaders['X-XSRF-TOKEN'] = csrfToken;
-			}
-		}
+		// CSRF tokens are handled by SvelteKit API endpoints, not client-side
+		// No need to add CSRF tokens in client requests to internal API
 
 		// Build request configuration
 		/** @type {RequestInit} */

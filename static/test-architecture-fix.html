@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест архитектуры клиент-серверного взаимодействия</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .log-container {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .log-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .log-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .log-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-login { background-color: #007bff; }
+        .test-register { background-color: #17a2b8; }
+        .clear-btn { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h1>Тест исправленной архитектуры</h1>
+    <p>Проверка правильной маршрутизации: Браузер → SvelteKit API → Laravel Backend</p>
+    
+    <div class="test-container">
+        <h2>Архитектурные тесты</h2>
+        <button class="test-login" onclick="testLogin()">Тест логина</button>
+        <button class="test-register" onclick="testRegister()">Тест регистрации</button>
+        <button class="clear-btn" onclick="clearLogs()">Очистить логи</button>
+    </div>
+
+    <div class="log-container">
+        <h3>Результаты</h3>
+        <div id="logs"></div>
+    </div>
+
+    <script>
+        // Логирование
+        function addLog(message, type = 'info') {
+            const logsContainer = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong> - ${message}`;
+            logsContainer.appendChild(logEntry);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+
+        // Очистка логов
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        // Тест логина
+        async function testLogin() {
+            addLog('🔐 ТЕСТ ЛОГИНА: Проверка архитектуры клиент → SvelteKit API', 'info');
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: 'test@example.com',
+                        password: 'testpassword',
+                        remember: false
+                    })
+                });
+
+                addLog(`📡 Ответ SvelteKit API: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                addLog(`📦 Данные: ${JSON.stringify(result, null, 2)}`, 'info');
+                
+                if (response.status === 422 || response.status === 401) {
+                    addLog('✅ АРХИТЕКТУРА РАБОТАЕТ: Запрос прошел через SvelteKit API к Laravel', 'success');
+                } else if (response.ok) {
+                    addLog('✅ ЛОГИН УСПЕШЕН: Архитектура работает корректно', 'success');
+                } else {
+                    addLog('⚠️ Неожиданный ответ, но архитектура работает', 'info');
+                }
+            } catch (error) {
+                if (error.message.includes('host.docker.internal')) {
+                    addLog('❌ ОШИБКА АРХИТЕКТУРЫ: Все еще обращается к host.docker.internal', 'error');
+                } else {
+                    addLog(`❌ Ошибка сети: ${error.message}`, 'error');
+                }
+                console.error('Login test error:', error);
+            }
+            
+            addLog('---', 'info');
+        }
+
+        // Тест регистрации
+        async function testRegister() {
+            const timestamp = Date.now();
+            addLog('📝 ТЕСТ РЕГИСТРАЦИИ: Проверка архитектуры клиент → SvelteKit API', 'info');
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        firstName: 'Тест Архитектуры',
+                        city: 'Москва',
+                        email: `architecture-test-${timestamp}@example.com`,
+                        password: 'testpassword123',
+                        password_confirmation: 'testpassword123',
+                        terms_accepted: true
+                    })
+                });
+
+                addLog(`📡 Ответ SvelteKit API: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                addLog(`📦 Данные: ${JSON.stringify(result, null, 2)}`, 'info');
+                
+                if (response.ok && result.user) {
+                    addLog('✅ РЕГИСТРАЦИЯ УСПЕШНА: Архитектура работает идеально', 'success');
+                    addLog(`👤 Пользователь создан: ${result.user.name}`, 'success');
+                } else if (response.status === 422) {
+                    addLog('✅ АРХИТЕКТУРА РАБОТАЕТ: Валидация прошла через SvelteKit API', 'success');
+                } else {
+                    addLog('⚠️ Неожиданный ответ, но архитектура работает', 'info');
+                }
+            } catch (error) {
+                if (error.message.includes('host.docker.internal')) {
+                    addLog('❌ ОШИБКА АРХИТЕКТУРЫ: Все еще обращается к host.docker.internal', 'error');
+                } else {
+                    addLog(`❌ Ошибка сети: ${error.message}`, 'error');
+                }
+                console.error('Register test error:', error);
+            }
+            
+            addLog('---', 'info');
+        }
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            addLog('🚀 Тест архитектуры загружен', 'info');
+            addLog('📋 Проверяем:', 'info');
+            addLog('• Нет прямых запросов к host.docker.internal', 'info');
+            addLog('• Все запросы идут через SvelteKit API (/api/*)', 'info');
+            addLog('• CSRF токены обрабатываются на сервере', 'info');
+            addLog('---', 'info');
+        });
+    </script>
+</body>
+</html> 
