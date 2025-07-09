@@ -47,7 +47,7 @@
 					</div>
 				</div>
 				<h2 class="text-pretty text-4xl font-semibold tracking-widest text-white sm:text-6xl">
-					BONUS 5
+					BONUS 57575
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
 					Бонус 5 — это первый сервис тайного маркетинга, который позволяет вам получать до 5%
