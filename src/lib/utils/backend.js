@@ -2,7 +2,7 @@ import { dev } from '$app/environment';
 
 /**
  * Determine the correct backend URL based on environment
- * Uses layered resolution: PUBLIC_API_BASE_URL → development defaults
+ * Uses layered resolution: Environment detection → appropriate defaults
  * @returns {string} Backend URL
  */
 export function getBackendUrl() {
@@ -11,12 +11,23 @@ export function getBackendUrl() {
 		environment: dev ? 'development' : 'production'
 	});
 
-	// Note: For now using fallback approach until server-side integration is complete
-
-	// Development fallback
+	// Development environment - use localhost:8000 for local dev (php artisan serve)
+	// For Docker dev mode, use environment variable or separate config
 	if (dev) {
-		console.log('🌐 Using dev backend URL: http://localhost:7010');
-		return 'http://localhost:7010';
+		// Check for Docker dev mode via window/browser environment variable
+		const isDockerDev =
+			typeof window !== 'undefined' &&
+			window.location.hostname === 'localhost' &&
+			window.location.port === '5010';
+
+		if (isDockerDev) {
+			console.log('🐳 Using Docker dev backend URL: http://localhost:7010');
+			return 'http://localhost:7010';
+		} else {
+			// Local development with npm run dev + php artisan serve
+			console.log('🌐 Using local dev backend URL: http://localhost:8000');
+			return 'http://localhost:8000';
+		}
 	}
 
 	// Production fallback
@@ -34,7 +45,7 @@ export function getFrontendUrl() {
 		dev
 	});
 
-	// Development fallback
+	// Development fallback - npm run dev uses Vite dev server on 5173
 	if (dev) {
 		console.log('🌐 Using dev frontend URL: http://localhost:5173');
 		return 'http://localhost:5173';
