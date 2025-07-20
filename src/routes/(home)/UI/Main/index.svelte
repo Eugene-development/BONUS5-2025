@@ -47,11 +47,11 @@
 					</div>
 				</div>
 				<h2 class="text-pretty text-4xl font-semibold tracking-widest text-white sm:text-6xl">
-					BONUS 57575
+					BONUS 5
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
-					Бонус 5 — это первый сервис тайного маркетинга, который позволяет вам получать до 5%
-					бонусами от покупок ваших клиентов у наших партнёров.
+					Бонус 5 — это первый сервис тайного маркетинга, который позволяет получать до 5% бонусами
+					с рекомендаций <sup class="text-green-500">*</sup>
 				</p>
 				<!-- <p class="mt-6 text-lg/8 text-gray-300">
 					Зарегистрируйтесь и отправьте контакты потенциального клиента нашим партнёрам<sup>*</sup> и
@@ -65,7 +65,7 @@
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-green-400"
+								class="h-7 w-6 text-green-500"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -82,7 +82,7 @@
 						</dt>
 						<dd>
 							<strong class="text-green-500">Честно.</strong>
-							Гарантировано выплатим бонус в полном объёме в течении 5 рабочих дней после закрытия сделки.
+							Гарантировано выплатим бонус в полном объёме в течении 5 рабочих дней после закрытия сделки
 						</dd>
 					</div>
 
@@ -90,7 +90,7 @@
 						<dt class="flex-none">
 							<span class="sr-only">Address</span>
 							<svg
-								class="h-7 w-6 text-green-400"
+								class="h-7 w-6 text-green-500"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -107,37 +107,13 @@
 						</dt>
 						<dd>
 							<strong class="text-green-500">Выгодно.</strong>
-							Дополнительный заработок на рекомендациях вам и хорошая экономия вашим клиентам.
-						</dd>
-					</div>
-
-					<div class="flex gap-x-4">
-						<dt class="flex-none">
-							<svg
-								class="h-7 w-6 text-green-400"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-								data-slot="icon"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-						</dt>
-						<dd>
-							<strong class="text-green-500">Надёжно.</strong> Мы работаем с лучшими компаниями поставщиками
-							товаров и услуг.
+							Дополнительный заработок на рекомендациях вам или хорошая экономия вашим клиентам
 						</dd>
 					</div>
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-green-400"
+								class="h-7 w-6 text-green-500"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -154,7 +130,31 @@
 						</dt>
 						<dd>
 							<strong class="text-green-500">Секретно.</strong>
-							Мы не будем никому раскрывать ваши личные регистрационные данные.
+							Мы не раскрываем ваши данные и информацию о вашем рекомендованном клиенте
+						</dd>
+					</div>
+
+					<div class="flex gap-x-4">
+						<dt class="flex-none">
+							<svg
+								class="h-7 w-6 text-green-500"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+						</dt>
+						<dd>
+							<strong class="text-green-500">Надёжно.</strong> Работаем только с лучшими компаниями поставщиками
+							товаров и услуг
 						</dd>
 					</div>
 				</dl>
@@ -271,6 +271,8 @@
 		</form> -->
 	</div>
 	<div class="px-6 pb-6">
-		<p class="text-sm text-gray-400">* только с согласия клиента</p>
+		<p class="text-sm text-gray-400">
+			<span class="text-green-500">*</span> рекомендации только с согласия клиента
+		</p>
 	</div>
 </div>
