@@ -51,7 +51,7 @@
 				</h2>
 				<p class="mt-6 text-lg/8 text-gray-300">
 					Бонус 5 — это первый сервис тайного маркетинга, который позволяет получать до 5% бонусами
-					с рекомендаций <sup class="text-green-500">*</sup>
+					с рекомендаций <sup class="text-green-400">*</sup>
 				</p>
 				<!-- <p class="mt-6 text-lg/8 text-gray-300">
 					Зарегистрируйтесь и отправьте контакты потенциального клиента нашим партнёрам<sup>*</sup> и
@@ -65,7 +65,7 @@
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-green-500"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -81,7 +81,7 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong class="text-green-500">Честно.</strong>
+							<strong class="text-green-400">Честно.</strong>
 							Гарантировано выплатим бонус в полном объёме в течении 5 рабочих дней после закрытия сделки
 						</dd>
 					</div>
@@ -90,7 +90,7 @@
 						<dt class="flex-none">
 							<span class="sr-only">Address</span>
 							<svg
-								class="h-7 w-6 text-green-500"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -106,14 +106,14 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong class="text-green-500">Выгодно.</strong>
+							<strong class="text-green-400">Выгодно.</strong>
 							Дополнительный заработок на рекомендациях вам или хорошая экономия вашим клиентам
 						</dd>
 					</div>
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-green-500"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -129,7 +129,7 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong class="text-green-500">Секретно.</strong>
+							<strong class="text-green-400">Секретно.</strong>
 							Мы не раскрываем ваши данные и информацию о вашем рекомендованном клиенте
 						</dd>
 					</div>
@@ -137,7 +137,7 @@
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<svg
-								class="h-7 w-6 text-green-500"
+								class="h-7 w-6 text-green-400"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -153,7 +153,7 @@
 							</svg>
 						</dt>
 						<dd>
-							<strong class="text-green-500">Надёжно.</strong> Работаем только с лучшими компаниями поставщиками
+							<strong class="text-green-400">Надёжно.</strong> Работаем только с лучшими компаниями поставщиками
 							товаров и услуг
 						</dd>
 					</div>
@@ -272,7 +272,7 @@
 	</div>
 	<div class="px-6 pb-6">
 		<p class="text-sm text-gray-400">
-			<span class="text-green-500">*</span> рекомендации только с согласия клиента
+			<span class="text-green-400">*</span> рекомендации только с согласия клиента
 		</p>
 	</div>
 </div>

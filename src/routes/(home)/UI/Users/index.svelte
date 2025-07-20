@@ -36,7 +36,7 @@
 			<div>
 				<h3 class="border-l border-green-500 pl-6 font-semibold text-gray-900">Заказчики</h3>
 				<address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
-					<p>Вы заказчик и хотите получить кэшбэк до 5% на покупке мебели или услуг</p>
+					<p>Вы заказчик и хотите получить кэшбэк бонусами до 5% на покупке товаров и услуг</p>
 				</address>
 			</div>
 		</div>
