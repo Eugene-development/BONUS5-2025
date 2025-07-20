@@ -38,11 +38,11 @@
 			<div class="mt-6 flow-root">
 				<div class="-my-6 divide-y divide-gray-500/25">
 					<div class="space-y-2 py-6">
-						<a
+						<!-- <a
 							href="/oferta"
 							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800"
 							>Оферта</a
-						>
+						> -->
 						<a
 							href="/project"
 							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800"

@@ -37,7 +37,7 @@
 	</div>
 	<div class="hidden *:tracking-widest lg:flex lg:gap-x-12">
 		<a href="/" class="text-sm/6 font-normal text-white">Главная</a>
-		<a href="/oferta" class="text-sm/6 font-normal text-white">Оферта</a>
+		<!-- <a href="/oferta" class="text-sm/6 font-normal text-white">Оферта</a> -->
 		<a href="/project" class="text-sm/6 font-normal text-white">Проект</a>
 		<a href="/payments" class="text-sm/6 font-normal text-white">Выплаты</a>
 		<a href="/152fz" class="text-sm/6 font-normal text-white">152 ФЗ</a>

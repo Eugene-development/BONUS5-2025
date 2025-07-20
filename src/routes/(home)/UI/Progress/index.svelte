@@ -5,7 +5,8 @@
 				Простые 4 шага
 			</h2>
 			<p class="mt-6 text-lg/8 text-gray-600">
-				Пройдите простую регистрацию и получите бонусы за рекомендации.
+				Пройдите простую регистрацию и начинайте получать бонусы за приведённых потенциальных
+				клиентов.
 			</p>
 		</div>
 	</div>
@@ -36,7 +37,9 @@
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Зарегистрируйтесь</span
 								>
-								<span class="text-sm font-medium text-gray-500">Регистрируйтесь в сервисе</span>
+								<span class="text-sm font-medium text-gray-500"
+									>Пройдите простую регистрацию на нашей платформе</span
+								>
 							</span>
 						</span>
 					</a>
@@ -62,7 +65,9 @@
 								<span class="text-sm font-medium group-hover:text-green-600"
 									>Получите инструкцию</span
 								>
-								<span class="text-sm font-medium text-gray-500">Cursus semper viverra.</span>
+								<span class="text-sm font-medium text-gray-500"
+									>После регистрации вам придёт инструкция на вашу почту.</span
+								>
 							</span>
 						</span>
 					</div>
@@ -101,7 +106,9 @@
 							</span>
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Рекомендуйте</span>
-								<span class="text-sm font-medium text-gray-500">Penatibus eu quis ante.</span>
+								<span class="text-sm font-medium text-gray-500"
+									>Отправьте контакты, заинтересованных клиентов партнёрам.</span
+								>
 							</span>
 						</span>
 					</div>
@@ -140,7 +147,9 @@
 							</span>
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Получайте бонусы</span>
-								<span class="text-sm font-medium text-gray-500">Penatibus eu quis ante.</span>
+								<span class="text-sm font-medium text-gray-500"
+									>После закрытия сделки получите положенные вам бонусы.</span
+								>
 							</span>
 						</span>
 					</div>
