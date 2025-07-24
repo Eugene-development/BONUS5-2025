@@ -326,11 +326,12 @@
 									: ''}"
 							/>
 							<label for="terms" class="text-sm/6 text-white {errors.terms ? 'text-red-400' : ''}">
-								Я согласен с <a
+								Я согласен с
+								<!-- <a
 									href="/oferta"
 									class="font-semibold text-indigo-400 hover:text-indigo-300">условиями оферты</a
 								>
-								и
+								и -->
 								<a href="/152fz" class="font-semibold text-indigo-400 hover:text-indigo-300"
 									>политикой обработки персональных данных</a
 								>
