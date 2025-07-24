@@ -37,7 +37,7 @@
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Зарегистрируйтесь</span
 								>
-								<span class="text-sm font-medium text-gray-500"
+								<span class="mt-1 text-sm font-medium text-gray-500"
 									>Пройдите простую регистрацию на нашей платформе</span
 								>
 							</span>
@@ -65,7 +65,7 @@
 								<span class="text-sm font-medium group-hover:text-green-600"
 									>Получите инструкцию</span
 								>
-								<span class="text-sm font-medium text-gray-500"
+								<span class="mt-1 text-sm font-medium text-gray-500"
 									>После регистрации вам придёт инструкция на вашу почту.</span
 								>
 							</span>
@@ -106,8 +106,8 @@
 							</span>
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Рекомендуйте</span>
-								<span class="text-sm font-medium text-gray-500"
-									>Отправляйте контакты, заинтересованных клиентов.</span
+								<span class="mt-1 text-sm font-medium text-gray-500"
+									>Отправляйте контакты заинтересованных клиентов.</span
 								>
 							</span>
 						</span>
@@ -147,7 +147,7 @@
 							</span>
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Получайте бонусы</span>
-								<span class="text-sm font-medium text-gray-500"
+								<span class="mt-1 text-sm font-medium text-gray-500"
 									>После закрытия сделки получайте положенные вам бонусы.</span
 								>
 							</span>
