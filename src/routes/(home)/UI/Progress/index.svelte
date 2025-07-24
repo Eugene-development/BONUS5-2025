@@ -107,7 +107,7 @@
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Рекомендуйте</span>
 								<span class="text-sm font-medium text-gray-500"
-									>Отправьте контакты, заинтересованных клиентов партнёрам.</span
+									>Отправляйте контакты, заинтересованных клиентов.</span
 								>
 							</span>
 						</span>
@@ -148,7 +148,7 @@
 							<span class="ml-4 mt-0.5 flex min-w-0 flex-col">
 								<span class="text-sm font-medium group-hover:text-green-600">Получайте бонусы</span>
 								<span class="text-sm font-medium text-gray-500"
-									>После закрытия сделки получите положенные вам бонусы.</span
+									>После закрытия сделки получайте положенные вам бонусы.</span
 								>
 							</span>
 						</span>

@@ -31,7 +31,7 @@
 			<div>
 				<h3 class="border-l border-green-500 pl-6 font-semibold text-gray-900">Дизайнеры</h3>
 				<address class="border-l border-gray-200 pl-6 pt-2 not-italic text-gray-600">
-					<p>Вы создаёте дизайн мебели или интерьеров и вы ищете кто выполнит проект</p>
+					<p>Вы проектируете дизайн мебели или интерьеров и вы ищете кто выполнит проект</p>
 				</address>
 			</div>
 			<div>
