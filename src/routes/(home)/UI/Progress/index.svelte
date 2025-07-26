@@ -56,7 +56,7 @@
 						<span class="flex items-start px-6 py-5 text-sm font-medium lg:pl-9">
 							<span class="shrink-0">
 								<span
-									class="flex size-10 items-center justify-center rounded-full border-2 border-gray-300 group-hover:border-green-600"
+									class="flex size-10 items-center justify-center rounded-full border-2 border-green-500 group-hover:border-green-600"
 								>
 									<span class="text-gray-500 group-hover:text-green-600">2</span>
 								</span>
@@ -77,7 +77,7 @@
 							viewBox="0 0 12 82"
 							fill="none"
 							preserveAspectRatio="none"
-							class="size-full text-gray-300"
+							class="size-full text-green-500"
 						>
 							<path
 								d="M0.5 0V31L10.5 41L0.5 51V82"
@@ -99,7 +99,7 @@
 						<span class="flex items-start px-6 py-5 text-sm font-medium lg:pl-9">
 							<span class="shrink-0">
 								<span
-									class="flex size-10 items-center justify-center rounded-full border-2 border-gray-300 group-hover:border-green-600"
+									class="flex size-10 items-center justify-center rounded-full border-2 border-green-500 group-hover:border-green-600"
 								>
 									<span class="text-gray-500 group-hover:text-green-600">3</span>
 								</span>
@@ -118,7 +118,7 @@
 							viewBox="0 0 12 82"
 							fill="none"
 							preserveAspectRatio="none"
-							class="size-full text-gray-300"
+							class="size-full text-green-500"
 						>
 							<path
 								d="M0.5 0V31L10.5 41L0.5 51V82"
@@ -140,7 +140,7 @@
 						<span class="flex items-start px-6 py-5 text-sm font-medium lg:pl-9">
 							<span class="shrink-0">
 								<span
-									class="flex size-10 items-center justify-center rounded-full border-2 border-gray-300 group-hover:border-green-600"
+									class="flex size-10 items-center justify-center rounded-full border-2 border-green-500 group-hover:border-green-600"
 								>
 									<span class="text-gray-500 group-hover:text-green-600">4</span>
 								</span>
@@ -159,7 +159,7 @@
 							viewBox="0 0 12 82"
 							fill="none"
 							preserveAspectRatio="none"
-							class="size-full text-gray-300"
+							class="size-full text-green-500"
 						>
 							<path
 								d="M0.5 0V31L10.5 41L0.5 51V82"
